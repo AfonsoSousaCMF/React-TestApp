@@ -24,6 +24,18 @@
   color: white;
 }
 
+.header-color {
+  background-color: cyan;
+}
+
+.paper {
+  margin: auto;
+  margin-top: 70px;
+  width: 700px;
+  height: auto;
+  padding: 30px;
+}
+
 .App-link {
   color: #61dafb;
 }
