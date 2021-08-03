@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Menu({ onClick }) {
+export default function Menu({ onClick, props }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -67,7 +66,6 @@ export default function Menu({ onClick }) {
     <div>
       {['left', 'right', 'top', 'bottom'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>

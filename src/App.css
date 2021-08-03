@@ -1,3 +1,7 @@
+body {
+  font-family: 'Rubik', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -28,12 +32,18 @@
   background-color: cyan;
 }
 
+.link {
+  color: white !important;
+  text-decoration: none !important;
+}
+
 .paper {
   margin: auto;
   margin-top: 70px;
   width: 700px;
   height: auto;
   padding: 30px;
+  background-color: rgb(1, 226, 226);
 }
 
 .App-link {

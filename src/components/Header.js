@@ -5,7 +5,15 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-// import Menu from './Menu';
+import Menu from './Menu.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,22 +31,31 @@ export const Header = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
+      <Menu />
       <AppBar position="static">
-        {/* <Menu></Menu> */}
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-            
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-          <Button color="inherit">Login</Button>
+
+          <Link to="/" color="inherit"> 
+            <Button className="link">Home</Button>
+          </Link>
+          <Link to="/sign-in" >
+            <Button className="link">Sign In</Button>
+          </Link>
+          <Link to="/sign-up">
+            <Button className="link">Sign Up</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
