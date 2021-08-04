@@ -14,9 +14,7 @@ export default (props) => {
             if (newsFromServer.status === 200) {
                 setNews(newsFromServer.data.data)
             }
-
         }
-
         getNews()
     }, [])
 

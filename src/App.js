@@ -23,7 +23,7 @@ function App() {
           <Route path="/sign-in">
             
           </Route>
-          <Route path="/">
+          <Route path="/" exact>
             <News />
           </Route>
         </Switch>
