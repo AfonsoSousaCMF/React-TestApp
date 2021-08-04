@@ -8,7 +8,7 @@ const News = () =>  {
     <>
       <Container>
         <Grid container spacing={2}>
-          <GetNew></GetNew>
+          <GetNew />
         </Grid>
       </Container>
     </>

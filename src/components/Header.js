@@ -36,14 +36,11 @@ export const Header = () => {
             News
           </Typography>
 
-          <NavLink to="/" color="inherit">
-            <Button className="link">Home</Button>
+          <NavLink to="/sign-in" className="link-auth">
+            <Button className="link-auth">Sign In</Button>
           </NavLink>
-          <NavLink to="/sign-in">
-            <Button className="link">Sign In</Button>
-          </NavLink>
-          <NavLink to="/sign-up">
-            <Button className="link">Sign Up</Button>
+          <NavLink to="/sign-up" className="link-auth">
+            <Button className="link-auth">Sign Up</Button>
           </NavLink>
         </Toolbar>
       </AppBar>

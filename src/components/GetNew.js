@@ -3,6 +3,7 @@ import Axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+// import LoadingScreen from "./LoadingScreen.js";
 
 export default (props) => {
     const [news, setNews] = useState([])
@@ -21,8 +22,7 @@ export default (props) => {
   const fetchNews = async () => {
     const res = await Axios.get('http://sitea-c-1229:8000/api/v1/supports')
     const data = await res
- 
-    console.log(data)
+    
     return data
   }
 
