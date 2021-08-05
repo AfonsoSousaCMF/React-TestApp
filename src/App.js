@@ -1,9 +1,9 @@
 import "./App.css";
 import Header from "./components/Header.js";
 import News from './pages/News.js'
-import Menu from './components/Menu.js'
 import Login from './pages/Login.js'
 import Register from './pages/Register.js'
+import SingleNew from './pages/SingleNew.js'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,7 @@ import {
   useParams
 } from "react-router-dom";
 
-function App() {
+function App(props) {
   return (
     <Router>
       <div className={"App"}>
@@ -25,9 +25,10 @@ function App() {
           <Route path="/sign-in">
             <Login />
           </Route>
-          <Route path="/" exact>
-            <News />
+          <Route exact path="/">
+            <News newId={props.newId}/>
           </Route>
+          <Route exact path="/:newId" render={(props) => <SingleNew newId={props.match.params.newId} {...props} />} />
         </Switch>
       </div>
     </Router>

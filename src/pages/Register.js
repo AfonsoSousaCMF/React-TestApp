@@ -6,7 +6,9 @@ const Register = () => {
         <>
             <Container>
                 <Grid container spacing={2}>
-                    <h1>Register Page</h1>
+                    <Grid item md={12}>
+                        <h1>Register Page</h1>
+                    </Grid>
                 </Grid>
             </Container>
         </>

@@ -42,6 +42,19 @@
   text-decoration: none !important;
 }
 
+.link-show-new {
+  text-decoration: none !important;
+  color: rgb(14, 13, 13) !important;
+}
+.link-show-new:hover {
+  text-decoration: none !important;
+  color: rgb(112, 110, 110) !important;
+}
+.link-show-new:active {
+  text-decoration: none !important;
+  color: rgb(37, 37, 37) !important;
+}
+
 .paper {
   margin: auto;
   margin-top: 100px;

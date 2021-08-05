@@ -1,14 +1,13 @@
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import { Container, Grid } from "@material-ui/core";
 import GetNew from "../components/GetNew.js"
 
-const News = () =>  {
+const News = (props) =>  {
   
   return (
     <>
       <Container>
         <Grid container spacing={2}>
-          <GetNew />
+          <GetNew newId={props.newId}/>
         </Grid>
       </Container>
     </>

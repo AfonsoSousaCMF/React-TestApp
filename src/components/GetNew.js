@@ -1,9 +1,8 @@
 import React, {  useEffect, useState } from "react";
 import Axios from "axios";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-// import LoadingScreen from "./LoadingScreen.js";
+import {Grid, Paper, Typography } from "@material-ui/core";
+import LoadingScreen from "./LoadingScreen.js";
+import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 
 export default (props) => {
     const [news, setNews] = useState([])
@@ -19,12 +18,13 @@ export default (props) => {
         getNews()
     }, [])
 
-  const fetchNews = async () => {
-    const res = await Axios.get('http://sitea-c-1229:8000/api/v1/supports')
-    const data = await res
-    
-    return data
-  }
+    // Fetch all News
+    const fetchNews = async () => {
+        const res = await Axios.get('http://sitea-c-1229:8000/api/v1/supports')
+        const data = await res
+
+        return data
+    }
 
     return (
         <>
@@ -32,7 +32,9 @@ export default (props) => {
                 <Paper className={"paper"} key={item.id}>
                     <Grid container spacing={2}>
                         <Grid item md={12}>
-                            <Typography variant="h5">{item.name}</Typography>
+                            <Link to={`/${item.id}`} className="link-show-new">
+                                <Typography variant="h5">{item.name}</Typography>
+                            </Link>
                         </Grid>
 
                         <Grid item md={12}>
