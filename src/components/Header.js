@@ -36,9 +36,9 @@ export const Header = () => {
           <NavLink to="/sign-in" className="link-auth">
             <Button className="link-auth">Sign In</Button>
           </NavLink>
-          <NavLink to="/sign-up" className="link-auth">
+          {/* <NavLink to="/sign-up" className="link-auth">
             <Button className="link-auth">Sign Up</Button>
-          </NavLink>
+          </NavLink> */}
         </Toolbar>
       </AppBar>
     </div>

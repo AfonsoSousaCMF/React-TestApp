@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import Axios from "axios";
-import {Grid, Container, Typography } from "@material-ui/core";
+import { Image } from 'react-bootstrap';
+import { Typography, Container, Grid, Button } from "@material-ui/core";
 import {
     BrowserRouter as Router,
     Switch,
@@ -19,8 +20,8 @@ const SingleNew = (props) => {
             const newsFromServer = await showNew()
             console.log(newsFromServer.data.status)
             if (newsFromServer.status === 200) {
+                console.log(newsFromServer.data.data)
                 setNew(newsFromServer.data.data)
-                console.log(newsFromServer.data.data);
             } else {
                 <Redirect to='/' exact />
             }
@@ -32,7 +33,7 @@ const SingleNew = (props) => {
     // Show New
     const showNew = async () => {
         const {newId} = props.match.params
-        console.log(newId)
+        console.log({newId})
         const res = await Axios.get(`http://sitea-c-1229:8000/api/v1/supports/${newId}`)
         const data = await res
         
@@ -40,32 +41,45 @@ const SingleNew = (props) => {
     }
 
     return (
-        <div>
-            {this.state.news.map((item, index) => (
-                <Container>
-                    <Grid container spacing={2}>
-                        <Grid item md={12}>
-                            <Typography variant="h2">{item.name}</Typography>
-                        </Grid>
-
-                        <Grid item md={12}>
-                            <Typography variant="h5">Começa a:</Typography>
-                            <Typography>{item.starts_at}</Typography>
-                        </Grid>
-
-                        <Grid item md={12}>
-                            <Typography variant="h5">Acaba a:</Typography>
-                            <Typography>{item.starts_at}</Typography>
-                        </Grid>
-
-                        <Grid item md={12}>
-                            <Typography variant="h5">Tags</Typography>
-                            <Typography>{item.keywords}</Typography>
-                        </Grid>
+        <>
+            <Container>
+                <Grid container>
+                    <Grid md={12} className="show-new-title">
+                        <Typography variant="h3">{news.name}</Typography>
                     </Grid>
-                </Container>
-            ))}
-        </div>
+                </Grid>
+
+                <Grid container className="mt-4">
+                    <Image className="mx-auto" src="https://via.placeholder.com/1200x500" alt="Image New" rounded/>
+                </Grid>
+
+                <Grid container className="mt-2">
+                    <Grid xs={5} md={3}>
+                        <Typography variant="h5">Começa a:</Typography>
+                        <Typography>{news.starts_at}</Typography>
+                    </Grid>
+
+                    <Grid xs={2} md={4}>
+                        <Typography variant="h5">Acaba a:</Typography>
+                        <Typography>{news.ends_at}</Typography>
+                    </Grid>
+
+                    <Grid xs={2} md={4}>
+                        <Typography variant="h5" className="mx-auto">Tags</Typography>
+                        <Typography>{news.keywords}</Typography>
+                    </Grid>
+                </Grid>
+
+                <Grid container className="mt-4">
+                    <Grid xs={2} md={12}>
+                        <Link className="back-btn" to="/" exact>
+                            <Button color="primary" variant="contained" >Go Back</Button>
+                        </Link>
+                    </Grid>
+                </Grid>
+
+            </Container>
+        </>
     )
 }
 

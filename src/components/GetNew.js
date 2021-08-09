@@ -44,7 +44,7 @@ export default (props) => {
 
                         <Grid item md={12}>
                             <Typography variant="h5">Acaba a:</Typography>
-                            <Typography>{item.starts_at}</Typography>
+                            <Typography>{item.ends_at}</Typography>
                         </Grid>
 
                         <Grid item md={12}>
