@@ -19,9 +19,6 @@ function App(props) {
       <div className={"App"}>
         <Header />
         <Switch>
-          <Route path="/sign-up">
-            <Register />
-          </Route>
           <Route path="/sign-in">
             <Login />
           </Route>

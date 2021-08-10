@@ -90,7 +90,24 @@
   margin-top: 2rem !important;
 }
 .mt-1 {
-  margin-top: 2rem !important;
+  margin-top: 1rem !important;
+}
+.mb-4 {
+  margin-bottom: 4rem !important;
+}
+.mb-3 {
+  margin-bottom: 3rem !important;
+}
+.mb-2 {
+  margin-bottom: 2rem !important;
+}
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+
+.form-input {
+  width: auto !important;
+  text-align: center !important;
 }
 
 .paper {
