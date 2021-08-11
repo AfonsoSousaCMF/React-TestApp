@@ -2,7 +2,6 @@ import "./App.css";
 import Header from "./components/Header.js";
 import News from './pages/News.js'
 import Login from './pages/Login.js'
-import Register from './pages/Register.js'
 import SingleNew from './pages/SingleNew.js'
 import {
   BrowserRouter as Router,

@@ -1,11 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
-import {AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import Menu from "./Menu.js";
-import {
-  BrowserRouter as Router,
-  NavLink,
-  useParams,
-} from "react-router-dom";
+import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
+import { BrowserRouter as Router, NavLink, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,26 +17,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Header = () => {
+const Header = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const classes = useStyles();
+  let authButton;
+
+  if (isLoggedIn) {
+    authButton = (
+      <NavLink to="/logout" className="link-auth">
+        <Button className="link-auth">Logout</Button>
+      </NavLink>
+    );
+  } else {
+    authButton = (
+      <NavLink to="/sign-in" className="link-auth">
+        <Button className="link-auth">Sign In</Button>
+      </NavLink>
+    );
+  }
 
   return (
     <div className={classes.root}>
-      
       <AppBar position="static">
         <Toolbar>
           <Menu />
-        
+
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
 
-          <NavLink to="/sign-in" className="link-auth">
-            <Button className="link-auth">Sign In</Button>
-          </NavLink>
-          {/* <NavLink to="/sign-up" className="link-auth">
-            <Button className="link-auth">Sign Up</Button>
-          </NavLink> */}
+          {authButton}
         </Toolbar>
       </AppBar>
     </div>

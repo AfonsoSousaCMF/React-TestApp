@@ -1,16 +1,16 @@
 import React, { useEffect, useState, Component } from "react";
-import SignIn from "../components/SignIn.js";
 import {
   Typography,
   TextField,
   Container,
-  Backdrop,
-  CircularProgress,
   Paper,
   Grid,
   Button,
+  Snackbar,
 } from "@material-ui/core";
-import { Alert } from "react-bootstrap";
+import { Alert } from "@material-ui/lab";
+import MuiAlert from "@material-ui/lab/Alert";
+import LoadingScreen from "../components/LoadingScreen.js";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
 import {
   BrowserRouter as Router,
@@ -23,27 +23,28 @@ import {
 const initialState = {
   username: "",
   password: "",
-  errors: {},
+  errors: [],
   isAuthorized: true,
   isLoading: false,
+  toggleAlert: false,
 };
 
 class Login extends Component {
   state = initialState;
 
-//   componentDidMount() {
-//     localStorage.getItem("token")
-//   }
+  //   componentDidMount() {
+  //     localStorage.getItem("token")
+  //   }
   componentWillUnmount() {}
 
   onUsernameChange = (event) => {
     // console.log(event.target.value);
-    this.setState({ username : event.target.value });
+    this.setState({ username: event.target.value });
   };
 
   onPasswordChange = (event) => {
     // console.log(event.target.value );
-    this.setState({ password : event.target.value  });
+    this.setState({ password: event.target.value });
   };
 
   onPressLogin = (event) => {
@@ -54,55 +55,74 @@ class Login extends Component {
 
     const onSuccess = ({ data }) => {
       // Set JSON Web Token on success
-      console.log('User:', data.data)
+      console.log("User:", data.data);
+      console.log("Token:", data.data.token);
       setClientToken(data.data.token);
       this.setState({ isLoading: false, isAuthorized: true });
+
+      // Redirects the user after successful Login
+      <Redirect to="/" />;
     };
 
     const onFailure = (error) => {
-      console.log('erro', error.response.data.error.errors);
-      this.setState({ errors: error.response.data.error.errors, isLoading: false });
+      console.log("erro", error.response.data.error.errors);
+      this.setState({
+        errors: error.response.data.error.errors,
+        isLoading: false,
+        toggleAlert: true,
+      });
     };
 
     // Show spinner when call is made
     this.setState({ isLoading: true });
 
-    APIKit.post("http://sitea-c-1229:8000/api/v1/login", payload).then(onSuccess).catch(onFailure);
-  }
+    APIKit.post("http://sitea-c-1229:8000/api/v1/login", payload)
+      .then(onSuccess)
+      .catch(onFailure);
+  };
+
+  /**
+   *  { "message" : "O erro base", "code" :"e0001", "errors": [{"message" : "error", "code" : "e0001"}]}
+   */
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ toggleAlert: false });
+  };
 
   getNonFieldErrorMessage() {
     // Return errors that are served in `non_field_errors`
     let errorMessage = null;
-    const { errors } = this.state;
-    if (errors) {
+    const { errors, toggleAlert } = this.state;
+
+    console.log(toggleAlert);
+
+    if (errors && errors.length > 0) {
       errorMessage = (
-        <Alert variant="danger" dismissible>
-            <Typography variant="p">
-                {console.log(errors)}
-                {errors.message}
-            </Typography>
-        </Alert>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={toggleAlert}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+        >
+          <MuiAlert
+            open={toggleAlert}
+            onClose={this.handleClose}
+            elevation={6}
+            severity="error"
+          >
+            {errors.map((error, index) => (
+              <span key={index}>
+                {console.log(error.message)}
+                {error.message}
+              </span>
+            ))}
+          </MuiAlert>
+        </Snackbar>
       );
     }
     return errorMessage;
-  }
-
-  getErrorMessageByField(field) {
-    // Checks for error message in specified field
-    // Shows error message from backend
-    let message = null;
-    if (this.state.errors[field]) {
-      message = (
-        <Alert variant="danger" dismissible>
-          {this.state.errors[field].map((item) => (
-            <Typography variant="p" key={item}>
-              {item}
-            </Typography>
-          ))}
-        </Alert>
-      );
-    }
-    return message;
   }
 
   render() {
@@ -110,13 +130,14 @@ class Login extends Component {
 
     return (
       <Container>
-        <Backdrop open={isLoading} styles={{ zIndex: 1 }}>
-            <CircularProgress color="inherit" />
-        </Backdrop>
-        <Grid container spacing={2}>
-          {this.getNonFieldErrorMessage()}
+        {/* Loading Screen */}
+        <LoadingScreen isLoading={isLoading} />
 
+        <Grid container spacing={2}>
           <Grid item md={12}>
+            <Grid item md={12}>
+              {this.getNonFieldErrorMessage()}
+            </Grid>
             <Paper className="paper" elevation={3} square>
               <Grid container spacing={2}>
                 <Grid item md={12}>
@@ -124,7 +145,11 @@ class Login extends Component {
                 </Grid>
               </Grid>
 
-              <form onSubmit={this.onPressLogin} method="post" autoComplete="off">
+              <form
+                onSubmit={this.onPressLogin}
+                method="post"
+                autoComplete="off"
+              >
                 <Grid container className="mt-2">
                   <Grid item md={12}>
                     <TextField
@@ -139,16 +164,11 @@ class Login extends Component {
                       onChange={this.onUsernameChange}
                       required
                     />
-
-                    {this.getErrorMessageByField("username")}
                   </Grid>
                 </Grid>
                 <Grid container>
                   <Grid item md={12}>
                     <TextField
-                      ref={(node) => {
-                        this.passwordInput = node;
-                      }}
                       name="password"
                       className="form-input"
                       label="Password"
@@ -158,18 +178,12 @@ class Login extends Component {
                       type="password"
                       required
                     />
-
-                    {this.getErrorMessageByField("password")}
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item md={12} className="mt-3">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                    >
+                    <Button variant="contained" color="primary" type="submit">
                       Sign In
                     </Button>
                   </Grid>

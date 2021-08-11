@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import Axios from "axios";
 import { Image } from 'react-bootstrap';
+import LoadingScreen from "../components/LoadingScreen.js";
 import { Typography, Container, Grid, Button } from "@material-ui/core";
 import {
     BrowserRouter as Router,
@@ -13,17 +14,22 @@ import {
   } from "react-router-dom";
 
 const SingleNew = (props) => {
-    const [news, setNew] = useState([])
+    const [news, setNew] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() =>  {
         const getNew = async () => {
+            setIsLoading(true);
             const newsFromServer = await showNew()
             console.log(newsFromServer.data.status)
+            
             if (newsFromServer.status === 200) {
                 console.log(newsFromServer.data.data)
                 setNew(newsFromServer.data.data)
+                setIsLoading(false);
             } else {
                 <Redirect to='/' exact />
+                setIsLoading(false);
             }
         }
         getNew()
@@ -43,6 +49,8 @@ const SingleNew = (props) => {
     return (
         <>
             <Container>
+                <LoadingScreen isLoading={isLoading} />
+
                 <Grid container>
                     <Grid md={12} className="show-new-title">
                         <Typography variant="h3">{news.name}</Typography>

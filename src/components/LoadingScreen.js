@@ -10,21 +10,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleBackdrop() {
+const LoadingScreen = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleToggle = () => {
-    setOpen(!open);
-  };
 
   return (
     <div>
-      <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+      <Backdrop className={classes.backdrop} open={props.isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </div>
   );
 }
+
+export default LoadingScreen
