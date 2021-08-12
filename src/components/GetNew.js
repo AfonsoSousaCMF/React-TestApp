@@ -5,13 +5,16 @@ import LoadingScreen from "./LoadingScreen.js";
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 
 export default (props) => {
-    const [news, setNews] = useState([])
+    const [news, setNews] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() =>  {
         const getNews = async () => {
+            setIsLoading(true);
             const newsFromServer = await fetchNews()
             console.log(newsFromServer.data.status)
             if (newsFromServer.status === 200) {
+                setIsLoading(false);
                 setNews(newsFromServer.data.data)
             }
         }
@@ -28,6 +31,7 @@ export default (props) => {
 
     return (
         <>
+            <LoadingScreen isLoading={isLoading} />
             {news.map((item, index) => (
                 <Paper className={"paper"} key={item.id}>
                     <Grid container spacing={2}>

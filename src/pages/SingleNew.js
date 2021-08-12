@@ -9,6 +9,7 @@ import {
     Route,
     Link,
     useRouteMatch,
+    withRouter,
     useParams,
     Redirect,
   } from "react-router-dom";
@@ -28,7 +29,7 @@ const SingleNew = (props) => {
                 setNew(newsFromServer.data.data)
                 setIsLoading(false);
             } else {
-                <Redirect to='/' exact />
+                <Redirect to={{ pathName: "home" }} exact />
                 setIsLoading(false);
             }
         }
@@ -80,7 +81,7 @@ const SingleNew = (props) => {
 
                 <Grid container className="mt-4">
                     <Grid xs={2} md={12}>
-                        <Link className="back-btn" to="/" exact>
+                        <Link className="back-btn" to={{ pathName: "home" }}>
                             <Button color="primary" variant="contained" >Go Back</Button>
                         </Link>
                     </Grid>
@@ -91,4 +92,4 @@ const SingleNew = (props) => {
     )
 }
 
-export default SingleNew
+export default withRouter(SingleNew)

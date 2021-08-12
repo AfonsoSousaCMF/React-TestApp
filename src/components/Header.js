@@ -2,8 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import Menu from "./Menu.js";
+import Dropdown from 'react-bootstrap/Dropdown'
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import { BrowserRouter as Router, NavLink, useParams } from "react-router-dom";
+import Cookies from 'js-cookie'
+import { BrowserRouter as Router, NavLink, Redirect, withRouter, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,11 +24,30 @@ const Header = (props) => {
   const classes = useStyles();
   let authButton;
 
+  useEffect(() => {
+    if (localStorage.token != null || "") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const logout = (e) => {
+    localStorage.clear();
+    <Redirect to="/" />
+  }
+
   if (isLoggedIn) {
     authButton = (
-      <NavLink to="/logout" className="link-auth">
-        <Button className="link-auth">Logout</Button>
-      </NavLink>
+      <>
+        <Dropdown>
+          <Dropdown.Toggle className="auth-dropdown" id="dropdown-autoclose-true">
+            {Cookies.get('authUser')}
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu className="auth-dropdown-menu">
+            <Button onClick={logout} className="auth-dropdown-item">Logout</Button>
+          </Dropdown.Menu>
+        </Dropdown>
+      </>
     );
   } else {
     authButton = (
@@ -53,4 +74,4 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

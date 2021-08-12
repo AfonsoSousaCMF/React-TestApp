@@ -1,13 +1,13 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
-const Register = () => {
+const Dashboard = () => {
     return (
         <>
             <Container>
                 <Grid container spacing={2}>
                     <Grid item md={12}>
-                        <h1>Register Page</h1>
+                        <h1>Dashboard</h1>
                     </Grid>
                 </Grid>
             </Container>
@@ -15,4 +15,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Dashboard

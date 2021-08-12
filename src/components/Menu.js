@@ -56,7 +56,7 @@ export default function Menu({ props }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <NavLink to="/" exact className="link-menu">
+        <NavLink to="/" pathname="home" exact className="link-menu">
           <ListItem button className="link-menu">
             <ListItemIcon>
               <HomeIcon />

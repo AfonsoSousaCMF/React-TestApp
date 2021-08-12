@@ -55,6 +55,41 @@
   color: rgb(37, 37, 37) !important;
 }
 
+.auth-dropdown {
+  background-color: rgb(32, 54, 173);
+  color: white;
+  border: inherit;
+  border-radius: 5px;
+  padding: 12px;
+  cursor: pointer;
+}
+.auth-dropdown:hover {
+  background-color: rgb(36, 52, 139);
+  color: white;
+}
+.auth-dropdown:active {
+  background-color: rgb(30, 45, 128);
+  color: white;
+}
+
+.auth-dropdown-menu {
+  background-color: transparent !important;
+  padding-top: 3px;
+}
+
+.auth-dropdown-item {
+  text-decoration: none;
+  background-color: rgb(212, 213, 218) !important;
+}
+.auth-dropdown-item:hover {
+  text-decoration: none;
+  background-color: rgb(190, 190, 190) !important;
+}
+.auth-dropdown-item:active {
+  text-decoration: none;
+  background-color: rgb(138, 139, 139) !important;
+}
+
 .show-new-title {
   margin-top: 50px !important;
   text-align: center !important;

@@ -12,10 +12,11 @@ import { Alert } from "@material-ui/lab";
 import MuiAlert from "@material-ui/lab/Alert";
 import LoadingScreen from "../components/LoadingScreen.js";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
+import Cookies from 'js-cookie'
 import {
   BrowserRouter as Router,
-  Link,
   useRouteMatch,
+  withRouter,
   useParams,
   Redirect,
 } from "react-router-dom";
@@ -24,7 +25,7 @@ const initialState = {
   username: "",
   password: "",
   errors: [],
-  isAuthorized: true,
+  isLoggedIn: true,
   isLoading: false,
   toggleAlert: false,
 };
@@ -32,9 +33,10 @@ const initialState = {
 class Login extends Component {
   state = initialState;
 
-  //   componentDidMount() {
-  //     localStorage.getItem("token")
-  //   }
+  componentDidMount() {
+    localStorage.getItem("token")
+  }
+
   componentWillUnmount() {}
 
   onUsernameChange = (event) => {
@@ -55,13 +57,16 @@ class Login extends Component {
 
     const onSuccess = ({ data }) => {
       // Set JSON Web Token on success
-      console.log("User:", data.data);
-      console.log("Token:", data.data.token);
+      console.log("User:", data);
       setClientToken(data.data.token);
-      this.setState({ isLoading: false, isAuthorized: true });
+      localStorage.setItem('token', data.data.token);
+      // Setting Cookies
+      Cookies.set('authUser', data.data.username)
+      console.log('Cookie', Cookies.get('authUser'))
+      this.setState({ isLoading: false, isLoggedIn: true });
 
       // Redirects the user after successful Login
-      <Redirect to="/" />;
+      <Redirect to={{ pathName: "home" }} />;
     };
 
     const onFailure = (error) => {
@@ -75,7 +80,7 @@ class Login extends Component {
 
     // Show spinner when call is made
     this.setState({ isLoading: true });
-
+    // sends request to api to verify authentication
     APIKit.post("http://sitea-c-1229:8000/api/v1/login", payload)
       .then(onSuccess)
       .catch(onFailure);
@@ -96,12 +101,10 @@ class Login extends Component {
     let errorMessage = null;
     const { errors, toggleAlert } = this.state;
 
-    console.log(toggleAlert);
-
     if (errors && errors.length > 0) {
       errorMessage = (
         <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
           open={toggleAlert}
           autoHideDuration={6000}
           onClose={this.handleClose}
@@ -158,9 +161,6 @@ class Login extends Component {
                       name="username"
                       maxLength={256}
                       value={this.state.username}
-                      onSubmit={(event) =>
-                        this.passwordInput.wrappedInstance.focus()
-                      }
                       onChange={this.onUsernameChange}
                       required
                     />
@@ -197,4 +197,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
