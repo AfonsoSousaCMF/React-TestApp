@@ -29,7 +29,6 @@ const SingleNew = (props) => {
                 setNew(newsFromServer.data.data)
                 setIsLoading(false);
             } else {
-                <Redirect to={{ pathName: "home" }} exact />
                 setIsLoading(false);
             }
         }
@@ -53,7 +52,7 @@ const SingleNew = (props) => {
                 <LoadingScreen isLoading={isLoading} />
 
                 <Grid container>
-                    <Grid md={12} className="show-new-title">
+                    <Grid item md={12} className="show-new-title">
                         <Typography variant="h3">{news.name}</Typography>
                     </Grid>
                 </Grid>
@@ -63,30 +62,29 @@ const SingleNew = (props) => {
                 </Grid>
 
                 <Grid container className="mt-2">
-                    <Grid xs={5} md={3}>
+                    <Grid item xs={5} md={3}>
                         <Typography variant="h5">Começa a:</Typography>
                         <Typography>{news.starts_at}</Typography>
                     </Grid>
 
-                    <Grid xs={2} md={4}>
+                    <Grid item xs={2} md={4}>
                         <Typography variant="h5">Acaba a:</Typography>
                         <Typography>{news.ends_at}</Typography>
                     </Grid>
 
-                    <Grid xs={2} md={4}>
+                    <Grid item xs={2} md={4}>
                         <Typography variant="h5" className="mx-auto">Tags</Typography>
                         <Typography>{news.keywords}</Typography>
                     </Grid>
                 </Grid>
 
                 <Grid container className="mt-4">
-                    <Grid xs={2} md={12}>
-                        <Link className="back-btn" to={{ pathName: "home" }}>
+                    <Grid item xs={2} md={12}>
+                        <Link className="back-btn" to="/">
                             <Button color="primary" variant="contained" >Go Back</Button>
                         </Link>
                     </Grid>
                 </Grid>
-
             </Container>
         </>
     )

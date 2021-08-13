@@ -10,6 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import MailIcon from "@material-ui/icons/Mail";
 import IconButton from "@material-ui/core/IconButton";
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuIcon from "@material-ui/icons/Menu";
 import {
   BrowserRouter as Router,
@@ -56,7 +57,7 @@ export default function Menu({ props }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <NavLink to="/" pathname="home" exact className="link-menu">
+        <NavLink to="/" exact className="link-menu">
           <ListItem button className="link-menu">
             <ListItemIcon>
               <HomeIcon />
@@ -65,16 +66,19 @@ export default function Menu({ props }) {
           </ListItem>
         </NavLink>
 
-        <NavLink to="/inbox" exact className="link-menu">
-          <ListItem button className="link-menu">
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-          </ListItem>
-        </NavLink>
+        {localStorage.token != null || "" ?
+          <NavLink to="/backoffice/dashboard" className="link-menu">
+            <ListItem button className="link-menu">
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+          </NavLink>
+          :
+          <Divider />
+        }
       </List>
-      <Divider />
     </div>
   );
 

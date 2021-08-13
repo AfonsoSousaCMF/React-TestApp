@@ -8,17 +8,17 @@ import {
   Button,
   Snackbar,
 } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import MuiAlert from "@material-ui/lab/Alert";
 import LoadingScreen from "../components/LoadingScreen.js";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
   useRouteMatch,
   withRouter,
   useParams,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 
 const initialState = {
@@ -34,7 +34,8 @@ class Login extends Component {
   state = initialState;
 
   componentDidMount() {
-    localStorage.getItem("token")
+    localStorage.getItem("token");
+    localStorage.getItem("authUser");
   }
 
   componentWillUnmount() {}
@@ -56,17 +57,16 @@ class Login extends Component {
     const payload = { username, password };
 
     const onSuccess = ({ data }) => {
-      // Set JSON Web Token on success
-      console.log("User:", data);
+      // Set Token on success
+      console.log("Data:", data);
       setClientToken(data.data.token);
-      localStorage.setItem('token', data.data.token);
-      // Setting Cookies
-      Cookies.set('authUser', data.data.username)
-      console.log('Cookie', Cookies.get('authUser'))
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("authUser", data.data.username);
+      console.log("User", localStorage.getItem("authUser"));
       this.setState({ isLoading: false, isLoggedIn: true });
 
       // Redirects the user after successful Login
-      <Redirect to={{ pathName: "home" }} />;
+      this.props.history.push("/backoffice/dashboard");
     };
 
     const onFailure = (error) => {

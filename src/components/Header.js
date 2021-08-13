@@ -5,7 +5,7 @@ import Menu from "./Menu.js";
 import Dropdown from 'react-bootstrap/Dropdown'
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
 import Cookies from 'js-cookie'
-import { BrowserRouter as Router, NavLink, Redirect, withRouter, useParams } from "react-router-dom";
+import { BrowserRouter as Router, NavLink, Link, Redirect, withRouter, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,7 @@ const Header = (props) => {
 
   const logout = (e) => {
     localStorage.clear();
-    <Redirect to="/" />
+    props.history.push('/');
   }
 
   if (isLoggedIn) {
@@ -40,7 +40,7 @@ const Header = (props) => {
       <>
         <Dropdown>
           <Dropdown.Toggle className="auth-dropdown" id="dropdown-autoclose-true">
-            {Cookies.get('authUser')}
+            {localStorage.authUser}
           </Dropdown.Toggle>
 
           <Dropdown.Menu className="auth-dropdown-menu">

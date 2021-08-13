@@ -31,25 +31,25 @@ function App(props) {
         <Header />
         <Switch>
           {isLoggedIn ? 
-            <Route path="/dashboard">
+            <Route path="/backoffice/dashboard" exact>
               <Dashboard />
             </Route>
           :
-            <Route path="/sign-in">
+            <Route path="/sign-in" exact>
               <Login />
             </Route>
           }
-          <Route exact path="/" pathName="home">
+          <Route exact path="/">
             <News newId={props.newId} />
           </Route>
           <Route
-            exact
             path="/:newId"
+            exact
             render={(props) => (
-              <SingleNew newId={props.match.params.newId} {...props} />
+              <SingleNew newId={props.match.params.newId}  />
             )}
           />
-          <Route default render={()=>(<h1>404 Not Found</h1>)} />
+          <Route render={()=>(<h1>404 Not Found</h1>)} />
         </Switch>
       </div>
     </Router>
