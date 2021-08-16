@@ -59,9 +59,10 @@ class Login extends Component {
     const onSuccess = ({ data }) => {
       // Set Token on success
       console.log("Data:", data);
-      setClientToken(data.data.token);
-      localStorage.setItem("token", data.data.token);
+      setClientToken(data.data.token.hash);
+      localStorage.setItem("token", data.data.token.hash);
       localStorage.setItem("authUser", data.data.username);
+      console.log("Token", localStorage.getItem("token"));
       console.log("User", localStorage.getItem("authUser"));
       this.setState({ isLoading: false, isLoggedIn: true });
 

@@ -27,6 +27,8 @@ const Header = (props) => {
   useEffect(() => {
     if (localStorage.token != null || "") {
       setIsLoggedIn(true);
+    } else {
+      props.history.push("/");
     }
   }, []);
 

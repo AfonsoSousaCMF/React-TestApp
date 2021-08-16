@@ -18,7 +18,7 @@ import {
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  
   useEffect(() => {
     if (localStorage.token != null || "") {
       setIsLoggedIn(true);
