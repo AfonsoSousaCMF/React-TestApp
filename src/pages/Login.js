@@ -68,6 +68,7 @@ class Login extends Component {
 
       // Redirects the user after successful Login
       this.props.history.push("/backoffice/dashboard");
+      window.location.reload();
     };
 
     const onFailure = (error) => {

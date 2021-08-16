@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Grid, Paper } from "@material-ui/core";
 import SuccessAlert from "../components/SuccessAlert";
-import LoadingScreen from "../components/LoadingScreen.js";
 import GetEntities from "../components/GetEntities.js"
 import GetPrograms from "../components/GetPrograms.js"
 import {
@@ -17,6 +16,7 @@ const Dashboard = (props) => {
   return (
     <>
       <SuccessAlert />
+
       <Container>
         <Grid container spacing={2}>
           <Grid item md={12}>

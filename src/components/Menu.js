@@ -68,6 +68,7 @@ export default function Menu({ props }) {
 
         {localStorage.token != null || "" ?
           <NavLink to="/backoffice/dashboard" className="link-menu">
+            <Divider />
             <ListItem button className="link-menu">
               <ListItemIcon>
                 <DashboardIcon />

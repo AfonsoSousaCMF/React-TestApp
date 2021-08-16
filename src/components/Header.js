@@ -29,11 +29,13 @@ const Header = (props) => {
       setIsLoggedIn(true);
     } else {
       props.history.push("/");
+
     }
   }, []);
 
   const logout = (e) => {
     localStorage.clear();
+    window.location.reload();
     props.history.push('/');
   }
 
