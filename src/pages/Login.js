@@ -27,6 +27,7 @@ const initialState = {
   errors: [],
   isLoggedIn: true,
   isLoading: false,
+  isAuthorized: false,
   toggleAlert: false,
 };
 
@@ -143,7 +144,7 @@ class Login extends Component {
             <Grid item md={12}>
               {this.getNonFieldErrorMessage()}
             </Grid>
-            <Paper className="paper" elevation={3} square>
+            <Paper className="paper-login" elevation={3} square>
               <Grid container spacing={2}>
                 <Grid item md={12}>
                   <Typography variant="h3">Sign In</Typography>
