@@ -32,8 +32,8 @@ export default (props) => {
   return (
     <>
       <LoadingScreen isLoading={isLoading} />
-
-      <Grid container spacing={2} className="grid-pagination">
+      
+      <Grid container spacing={2} className="grid-pagination" id="ScrollUp">
         <Pagination
           changePage={fetchNewsPaginate}
           data={pages}
