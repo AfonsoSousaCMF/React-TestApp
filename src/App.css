@@ -341,3 +341,13 @@
   background-color: #300bd4 !important;
   color: #ffffff !important;
 }
+
+.username {
+  vertical-align: middle;
+  margin-bottom: 7px;
+  margin-left: 6px;
+}
+
+.username-avatar {
+  vertical-align: middle;
+}

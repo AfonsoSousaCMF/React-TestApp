@@ -25,7 +25,7 @@ const SingleNew = (props) => {
             console.log(newsFromServer.data.status)
             
             if (newsFromServer.status === 200) {
-                console.log(newsFromServer.data.data)
+                // console.log(newsFromServer.data.data)
                 setNew(newsFromServer.data.data)
                 setIsLoading(false);
             } else {

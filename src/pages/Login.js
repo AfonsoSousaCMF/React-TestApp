@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import LoadingScreen from "../components/LoadingScreen.js";
+import SuccessAlert from "../components/SuccessAlert";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
 import Cookies from "js-cookie";
 import {
@@ -29,6 +30,7 @@ const initialState = {
   isLoading: false,
   isAuthorized: false,
   toggleAlert: false,
+  toggleSuccessAlert: false,
 };
 
 class Login extends Component {
@@ -53,23 +55,23 @@ class Login extends Component {
 
   onPressLogin = (event) => {
     event.preventDefault();
-    console.log(event);
+    // console.log(event);
     const { username, password } = this.state;
     const payload = { username, password };
 
     const onSuccess = ({ data }) => {
       // Set Token on success
-      console.log("Data:", data);
       setClientToken(data.data.token.hash);
       localStorage.setItem("token", data.data.token.hash);
       localStorage.setItem("authUser", data.data.username);
-      console.log("Token", localStorage.getItem("token"));
-      console.log("User", localStorage.getItem("authUser"));
-      this.setState({ isLoading: false, isLoggedIn: true });
+      // console.log("Token", localStorage.getItem("token"));
+      // console.log("User", localStorage.getItem("authUser"));
+      this.setState({ isLoading: false, isLoggedIn: true, toggleSuccessAlert: true });
 
       // Redirects the user after successful Login
       this.props.history.push("/backoffice/dashboard");
       window.location.reload();
+      <SuccessAlert toggleSuccessAlert={this.state.toggleSuccessAlert} />
     };
 
     const onFailure = (error) => {

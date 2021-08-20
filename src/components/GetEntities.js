@@ -53,10 +53,6 @@ const columns = [
   },
 ];
 
-function createData(id, name, created_at, updated_at) {
-  return { id, name, created_at, updated_at };
-}
-
 const GetEntities = () => {
   const [entities, setEntities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

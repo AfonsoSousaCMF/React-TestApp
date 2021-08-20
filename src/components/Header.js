@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import Menu from "./Menu.js";
 import Dropdown from 'react-bootstrap/Dropdown'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
 import Cookies from 'js-cookie'
 import { BrowserRouter as Router, NavLink, Link, Redirect, withRouter, useParams } from "react-router-dom";
@@ -44,7 +45,8 @@ const Header = (props) => {
       <>
         <Dropdown>
           <Dropdown.Toggle className="auth-dropdown" id="dropdown-autoclose-true">
-            {localStorage.authUser}
+            <AccountCircleIcon className="username-avatar" />
+            <span className="username">{localStorage.authUser}</span> 
           </Dropdown.Toggle>
 
           <Dropdown.Menu className="auth-dropdown-menu">
