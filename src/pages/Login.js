@@ -71,7 +71,6 @@ class Login extends Component {
       // Redirects the user after successful Login
       this.props.history.push("/backoffice/dashboard");
       window.location.reload();
-      <SuccessAlert toggleSuccessAlert={this.state.toggleSuccessAlert} />
     };
 
     const onFailure = (error) => {

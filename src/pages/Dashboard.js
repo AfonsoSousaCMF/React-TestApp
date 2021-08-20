@@ -13,9 +13,11 @@ import {
 } from "react-router-dom";
 
 const Dashboard = (props) => {
+  const [toggleSuccessAlert, setToggleSuccessAlert] = useState(false);
+
   return (
     <>
-      
+      <SuccessAlert toggleSuccessAlert={toggleSuccessAlert} />
       <Container>
         <Grid container spacing={2}>
           <Grid item md={12}>

@@ -2,11 +2,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import Menu from "./Menu.js";
-import Dropdown from 'react-bootstrap/Dropdown'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Dropdown from "react-bootstrap/Dropdown";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import Cookies from 'js-cookie'
-import { BrowserRouter as Router, NavLink, Link, Redirect, withRouter, useParams } from "react-router-dom";
+import App from "../App.js";
+import Cookies from "js-cookie";
+import {
+  BrowserRouter as Router,
+  NavLink,
+  Link,
+  Redirect,
+  withRouter,
+  useParams,
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,27 +38,32 @@ const Header = (props) => {
       setIsLoggedIn(true);
     } else {
       props.history.push("/");
-
+      setIsLoggedIn(false);
     }
   }, []);
 
   const logout = (e) => {
     localStorage.clear();
+    props.history.push("/");
     window.location.reload();
-    props.history.push('/');
-  }
+  };
 
   if (isLoggedIn) {
     authButton = (
       <>
         <Dropdown>
-          <Dropdown.Toggle className="auth-dropdown" id="dropdown-autoclose-true">
+          <Dropdown.Toggle
+            className="auth-dropdown"
+            id="dropdown-autoclose-true"
+          >
             <AccountCircleIcon className="username-avatar" />
-            <span className="username">{localStorage.authUser}</span> 
+            <span className="username">{localStorage.authUser}</span>
           </Dropdown.Toggle>
 
           <Dropdown.Menu className="auth-dropdown-menu">
-            <Button onClick={logout} className="auth-dropdown-item">Logout</Button>
+            <Button onClick={logout} className="auth-dropdown-item">
+              Logout
+            </Button>
           </Dropdown.Menu>
         </Dropdown>
       </>
