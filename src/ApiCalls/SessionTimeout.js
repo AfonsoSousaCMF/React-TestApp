@@ -50,7 +50,7 @@ const SessionTimeout = ({ isLoggedIn, logOut, props }) => {
   };
 
   const onIdle = () => {
-    const delay = 5000 * 1;
+    const delay = 1000 * 1;
     if (isLoggedIn && !timeoutModalOpen) {
       timeout = setTimeout(() => {
         let countDown = 10;
@@ -62,7 +62,7 @@ const SessionTimeout = ({ isLoggedIn, logOut, props }) => {
           } else {
             handleLogout(true);
           }
-        }, 5000);
+        }, 1000);
       }, delay);
     }
   };
@@ -74,7 +74,7 @@ const SessionTimeout = ({ isLoggedIn, logOut, props }) => {
         onActive={onActive}
         onIdle={onIdle}
         debounce={250}
-        timeout={5000}
+        timeout={5400000}
       />
       <SessionTimeoutDialog
         countdown={timeoutCountdown}
