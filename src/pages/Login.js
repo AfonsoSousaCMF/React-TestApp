@@ -63,6 +63,7 @@ class Login extends Component {
       // Set Token on success
       setClientToken(data.data.token.hash);
       localStorage.setItem("token", data.data.token.hash);
+      localStorage.setItem("tokenExpiration", data.data.token.expiration);
       localStorage.setItem("authUser", data.data.username);
       // console.log("Token", localStorage.getItem("token"));
       // console.log("User", localStorage.getItem("authUser"));
@@ -71,6 +72,7 @@ class Login extends Component {
       // Redirects the user after successful Login
       this.props.history.push("/backoffice/dashboard");
       window.location.reload();
+      // console.log(data.data.token);
     };
 
     const onFailure = (error) => {
