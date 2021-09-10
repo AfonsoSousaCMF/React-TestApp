@@ -80,7 +80,7 @@ const GetPrograms = () => {
     setIsLoading(true);
     // sends request to api get the Entities
     const res = await APIKit.get(
-      "http://sitea-c-1229:8000/api/v1/backoffice/programs",
+      "http://sitea-c-1229:8001/api/v1/backoffice/programs",
       {
         headers: {
           authorization: `Bearer ${token}`,

@@ -17,7 +17,7 @@ export default (props) => {
 
   // Fetch all News
   const fetchNews = (page, data = null) => {
-    Axios.get("http://sitea-c-1229:8000/api/v1/supports?page=" + page).then(
+    Axios.get("http://sitea-c-1229:8001/api/v1/supports?page=" + page).then(
       (newsFromServer) => {
         setPages(newsFromServer.data);
         setNews(newsFromServer.data.data);

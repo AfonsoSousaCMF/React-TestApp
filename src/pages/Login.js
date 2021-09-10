@@ -87,7 +87,7 @@ class Login extends Component {
     // Show spinner when call is made
     this.setState({ isLoading: true });
     // sends request to api to verify authentication
-    APIKit.post("http://sitea-c-1229:8000/api/v1/login", payload)
+    APIKit.post("http://sitea-c-1229:8001/api/v1/login", payload)
       .then(onSuccess)
       .catch(onFailure);
   };
