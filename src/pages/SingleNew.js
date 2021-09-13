@@ -40,7 +40,7 @@ const SingleNew = (props) => {
     const showNew = async () => {
         const {newId} = props.match.params
         // console.log({newId})
-        const res = await Axios.get(`http://sitea-c-1229:8000/api/v1/supports/${newId}`)
+        const res = await Axios.get(`http://sitea-c-1229:8001/api/v1/supports/${newId}`)
         const data = await res
         
         return data

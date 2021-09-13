@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Pagination } from "react-laravel-paginex";
 import {
   Container,
   Grid,
@@ -54,57 +55,39 @@ const columns = [
 ];
 
 const GetPrograms = () => {
+  const classes = useStyles();
+  const [pages, setPages] = useState({});
   const [programs, setPrograms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const getPrograms = async () => {
-      setIsLoading(true);
-      const programsFromServer = await fetchPrograms();
-    //   console.log("Programs status", programsFromServer.data.status);
-      if (programsFromServer.status === 200) {
-        setIsLoading(false);
-        setPrograms(programsFromServer.data.data);
-        // console.log(programsFromServer.data.data);
-      }
-    };
-    getPrograms();
+    setIsLoading(true);
+    fetchPrograms(1);
   }, []);
 
   // Fetch all Programs
-  const fetchPrograms = async () => {
+  const fetchPrograms = (page, data = null) => {
     var token = localStorage.token
 
-    // console.log('token', token)
-    // Show spinner when call is made
-    setIsLoading(true);
-    // sends request to api get the Entities
-    const res = await APIKit.get(
-      "http://sitea-c-1229:8001/api/v1/backoffice/programs",
+    // sends request to api get the Programs
+    APIKit.get("http://sitea-c-1229:8001/api/v1/backoffice/programs?page=" + page,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       }
+    ).then(
+      (programsFromServer) => {
+        setPages(programsFromServer.data);
+        setPrograms(programsFromServer.data.data);
+        setIsLoading(false);
+      }
     );
-    const data = await res;
-
-    return data;
   };
 
-  const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const fetchProgramsPaginate = (data) => {
+    fetchPrograms(data.page, data);
   };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   return (
     <>
       <LoadingScreen isLoading={isLoading} />
@@ -130,7 +113,6 @@ const GetPrograms = () => {
           </TableHead>
           <TableBody>
             {programs
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((program) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={program.id}>
@@ -150,14 +132,10 @@ const GetPrograms = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25]}
-        component="div"
-        count={programs.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+      <Pagination
+        changePage={fetchProgramsPaginate}
+        data={pages}
+        numberClass={"page-link"}
       />
     </>
   );

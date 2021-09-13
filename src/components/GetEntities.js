@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Pagination } from "react-laravel-paginex";
 import {
   Container,
   Grid,
@@ -54,55 +55,37 @@ const columns = [
 ];
 
 const GetEntities = () => {
+  const classes = useStyles();
   const [entities, setEntities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pages, setPages] = useState({});
 
   useEffect(() => {
-    const getEntities = async () => {
-      setIsLoading(true);
-      const entitiesFromServer = await fetchEntities();
-      // console.log("Entities status", entitiesFromServer.data.status);
-      if (entitiesFromServer.status === 200) {
-        setIsLoading(false);
-        setEntities(entitiesFromServer.data.data);
-        // console.log(entitiesFromServer.data.data);
-      }
-    };
-    getEntities();
+    setIsLoading(true);
+    fetchEntities(1);
   }, []);
 
   // Fetch all Entities
-  const fetchEntities = async () => {
+  const fetchEntities = (page, data = null) => {
     var token = localStorage.token
-
-    // console.log('token', token)
-    // Show spinner when call is made
-    setIsLoading(true);
     // sends request to api get the Entities
-    const res = await APIKit.get(
-      "http://sitea-c-1229:8001/api/v1/backoffice/entities",
+    APIKit.get("http://sitea-c-1229:8001/api/v1/backoffice/entities?page=" + page,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       }
+    ).then(
+      (entitiesFromServer) => {
+        setPages(entitiesFromServer.data);
+        setEntities(entitiesFromServer.data.data);
+        setIsLoading(false);
+      }
     );
-    const data = await res;
-
-    return data;
   };
 
-  const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const fetchEntitiesPaginate = (data) => {
+    fetchEntities(data.page, data);
   };
 
   return (
@@ -130,7 +113,6 @@ const GetEntities = () => {
           </TableHead>
           <TableBody>
             {entities
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((entitie, index) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={entitie.id}>
@@ -150,14 +132,13 @@ const GetEntities = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25]}
-        component="div"
-        count={entities.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+      <Pagination
+        changePage={fetchEntitiesPaginate}
+        data={pages}
+        numberClass={"page-link"}
+        buttonIcons={true}
+        nextButtonIcon={"chevron-right"}
+        prevButtonIcon={"chevron-left"}
       />
     </>
   );

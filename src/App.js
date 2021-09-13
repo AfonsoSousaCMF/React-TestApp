@@ -63,11 +63,29 @@ const LogoutButton = (props) => {
 
 function App(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const authContext = createContext();
+  const authContext = createContext(() => {
+    let token = localStorage.getItem("token");
+    // const { exp } = jwtDecode(token);
+    // Refresh the token a minute early to avoid latency issues
+    const expirationTime = token * 1000 - 60000;
+    if (Date.now() >= expirationTime) {
+      localStorage.clear();
+      history.push('/sign-in');
+      window.location.reload();
+    }
+    return {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+  });
 
   function useAuth() {
+    // const authContext = 
     return useContext(authContext);
+    
   }
 
   useEffect(() => {

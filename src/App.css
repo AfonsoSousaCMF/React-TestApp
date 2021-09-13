@@ -285,11 +285,31 @@
 }
 
 .chevron-left {
-  background-image: url("./icons/chevron_left_black.png");
+  content:url("./icons/chevron_left_black.png");
+  display: flex;
+  width: 14px;
+  height: 15px;
+  padding-left: 0px;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-right: 0px;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .chevron-right {
-  background-image: url("./icons/chevron_right_black.png");
+  content:url("./icons/chevron_right_black.png");
+  display: flex;
+  width: 14px;
+  height: 15px;
+  padding-left: 0px;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-right: 0px;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-link {
