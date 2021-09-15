@@ -4,14 +4,8 @@ import { Image } from 'react-bootstrap';
 import LoadingScreen from "../components/LoadingScreen.js";
 import { Typography, Container, Grid, Button } from "@material-ui/core";
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
     Link,
-    useRouteMatch,
     withRouter,
-    useParams,
-    Redirect,
   } from "react-router-dom";
 
 const SingleNew = (props) => {
@@ -21,8 +15,9 @@ const SingleNew = (props) => {
     useEffect(() =>  {
         const getNew = async () => {
             setIsLoading(true);
-            const newsFromServer = await showNew()
-            console.log(newsFromServer.data.status)
+            let newsFromServer;
+            newsFromServer = await showNew();
+            // console.log(newsFromServer.data.status)
             
             if (newsFromServer.status === 200) {
                 // console.log(newsFromServer.data.data)
@@ -33,7 +28,6 @@ const SingleNew = (props) => {
             }
         }
         getNew()
-        
     }, [])
 
     // Show New

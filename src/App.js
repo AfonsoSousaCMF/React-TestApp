@@ -66,7 +66,7 @@ function App(props) {
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const authContext = createContext(() => {
-    let token = localStorage.getItem("token");
+    let token = localStorage.token;
     // const { exp } = jwtDecode(token);
     // Refresh the token a minute early to avoid latency issues
     const expirationTime = token * 1000 - 60000;
@@ -83,9 +83,7 @@ function App(props) {
   });
 
   function useAuth() {
-    // const authContext = 
     return useContext(authContext);
-    
   }
 
   useEffect(() => {

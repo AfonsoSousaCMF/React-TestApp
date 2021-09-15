@@ -45,6 +45,8 @@
 .link-show-new {
   text-decoration: none !important;
   color: rgb(14, 13, 13) !important;
+  text-decoration: bold !important;
+  font-weight: 500 !important;
 }
 .link-show-new:hover {
   text-decoration: none !important;
@@ -118,13 +120,54 @@
   text-decoration: none;
 }
 
-.my-auto {
-  margin-top: auto !important;
-  margin-bottom: auto !important;
-}
 .mx-auto {
   margin-right: auto !important;
   margin-left: auto !important;
+}
+.mx-1 {
+    margin-right: 1rem !important;
+    margin-left: 1rem !important;
+}
+.mx-2 {
+    margin-right: 2rem !important;
+    margin-left: 2rem !important;
+}
+.mx-3 {
+    margin-right: 3rem !important;
+    margin-left: 3rem !important;
+}
+.mx-4 {
+    margin-right: 4rem !important;
+    margin-left: 4rem !important;
+}
+.mx-5 {
+    margin-right: 5rem !important;
+    margin-left: 5rem !important;
+}
+
+.my-auto {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+}
+.my-1 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+.my-2 {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+.my-3 {
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
+}
+.my-4 {
+    margin-top: 4rem !important;
+    margin-bottom: 4rem !important;
+}
+.my-5 {
+    margin-top: 5rem !important;
+    margin-bottom: 5rem !important;
 }
 
 .mt-4 {
@@ -164,7 +207,7 @@
   height: auto;
   padding: 30px;
   text-align: center !important;
-  background-color: rgba(223, 223, 223, 0.74) !important;
+  background-color: rgba(232, 232, 232, 0.74) !important;
 }
 
 .paper-login {
@@ -370,4 +413,8 @@
 
 .username-avatar {
   vertical-align: middle;
+}
+
+.chip {
+  margin: 8px 4px 0px 4px;
 }

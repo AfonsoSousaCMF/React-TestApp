@@ -1,25 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from "@material-ui/icons/Home";
-import MailIcon from "@material-ui/icons/Mail";
-import IconButton from "@material-ui/core/IconButton";
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import MenuIcon from "@material-ui/icons/Menu";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+import IconButton from "@material-ui/core/IconButton";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import MenuIcon from "@material-ui/icons/Menu";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
@@ -32,7 +26,7 @@ const useStyles = makeStyles({
 
 export default function Menu({ props }) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     left: false,
   });
 
@@ -66,7 +60,7 @@ export default function Menu({ props }) {
           </ListItem>
         </NavLink>
 
-        {localStorage.token != null || "" ?
+        {localStorage.token != null || "" ? (
           <NavLink to="/backoffice/dashboard" className="link-menu">
             <Divider />
             <ListItem button className="link-menu">
@@ -76,9 +70,9 @@ export default function Menu({ props }) {
               <ListItemText primary="Dashboard" />
             </ListItem>
           </NavLink>
-          :
+        ) : (
           <Divider />
-        }
+        )}
       </List>
     </div>
   );

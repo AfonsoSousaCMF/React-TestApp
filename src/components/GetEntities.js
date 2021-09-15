@@ -16,15 +16,7 @@ import {
 } from "@material-ui/core";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
 import LoadingScreen from "./LoadingScreen.js";
-import {
-  BrowserRouter as Router,
-  useRouteMatch,
-  withRouter,
-  Link,
-  useParams,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+
 
 const useStyles = makeStyles({
   root: {
