@@ -56,35 +56,51 @@ const GetNew = (props) => {
         <Paper className={"paper"} key={suport.id}>
           <Grid container spacing={2}>
             <Grid item md={12}>
-              <Link to={`/${suport.id}`} className="link-show-new">
+              <Link
+                to={`/${suport.id}`}
+                params={suport}
+                className="link-show-new"
+              >
                 <Typography variant="h5">{suport.name}</Typography>
               </Link>
             </Grid>
             <Divider />
 
-            <Grid container spacing={2} className={"my-2"}>
+            <Grid container spacing={2} className={"mt-2"}>
               <Grid item md={6}>
-                <Typography variant="h6">Entidade</Typography>
-                {suport.entities.map((entitie) => (
-                  <Typography key={entitie.id}>
-                    {entitie.id === null ? "N/D" : entitie.name}
-                  </Typography>
-                ))}
+                <Typography variant="h6" className={"purple"}>
+                  Entidades
+                </Typography>
+                {/*checks if suport.entities is empty*/}
+                {suport.entities.length === 0 ? (
+                  <Typography>N/D</Typography>
+                ) : (
+                  suport.entities.map((entitie) => (
+                    <Typography key={entitie.id}>{entitie.name}</Typography>
+                  ))
+                )}
               </Grid>
 
               <Grid item md={6}>
-                <Typography variant="h6">Programa</Typography>
-                {suport.programs.map((program) => (
-                  <Typography key={program.id}>
-                    {program.id === null ? "N/D" : program.name}
-                  </Typography>
-                ))}
+                <Typography variant="h6" className={"purple"}>
+                  Programa
+                </Typography>
+                {/*checks if suport.programs is empty*/}
+                {suport.programs.length === 0 ? (
+                  <Typography>N/D</Typography>
+                ) : (
+                  suport.programs.map((program) => (
+                    <Typography key={program.id}>{program.name}</Typography>
+                  ))
+                )}
               </Grid>
             </Grid>
 
             <Grid container spacing={2} className={"mt-2"}>
               <Grid item md={4}>
-                <Typography variant="h6">Tipo de Financiamento</Typography>
+                <Typography variant="h6" className={"purple"}>
+                  Tipo de Financiamento
+                </Typography>
                 {/*checks if suport.fee is null*/}
                 <Typography>
                   {suport.fee === null ? "N/D" : suport.fee.name}
@@ -92,46 +108,92 @@ const GetNew = (props) => {
               </Grid>
 
               <Grid item md={4}>
-                <Typography variant="h6">Sectores</Typography>
-                {suport.sectors.map((sector) => (
-                  <Typography key={sector.id}>{sector.name}</Typography>
-                ))}
+                <Typography variant="h6" className={"purple"}>
+                  Sectores
+                </Typography>
+                {/*checks if suport.sectors is empty*/}
+                {suport.sectors.length === 0 ? (
+                  <Typography>N/D</Typography>
+                ) : (
+                  suport.sectors.map((sector) => (
+                    <Typography key={sector.id}>{sector.name}</Typography>
+                  ))
+                )}
               </Grid>
 
               <Grid item md={4}>
-                <Typography variant="h6">Categorias</Typography>
-                {suport.categories.map((categorie) => (
-                  <Typography key={categorie.id}>
-                    {categorie.id === null ? "-" : categorie.name}
-                  </Typography>
-                ))}
+                <Typography variant="h6" className={"purple"}>
+                  Categorias
+                </Typography>
+                {/*checks if suport.categories is empty*/}
+                {suport.categories.length === 0 ? (
+                  <Typography>-</Typography>
+                ) : (
+                  suport.categories.map((categorie) => (
+                    <Typography key={categorie.id}>{categorie.name}</Typography>
+                  ))
+                )}
               </Grid>
             </Grid>
 
             <Grid container spacing={2} className={"mt-2"}>
               <Grid item md={4}>
-                <Typography variant="h6">Estado</Typography>
+                <Typography variant="h6" className={"purple"}>
+                  Estado
+                </Typography>
                 <Typography>{suport.state.name}</Typography>
               </Grid>
 
               <Grid item md={4}>
-                <Typography variant="h6">Começa a:</Typography>
+                <Typography variant="h6" className={"purple"}>
+                  Data Abertura:
+                </Typography>
                 <Typography>
                   {suport.starts_at === null ? "N/D" : suport.starts_at}
                 </Typography>
               </Grid>
 
               <Grid item md={4}>
-                <Typography variant="h6">Acaba a:</Typography>
+                <Typography variant="h6" className={"purple"}>
+                  Data Fecho:
+                </Typography>
                 <Typography>
                   {suport.ends_at === null ? "N/D" : suport.ends_at}
                 </Typography>
               </Grid>
             </Grid>
 
+            <Grid container spacing={5} className={"mt-2"}>
+              <Grid item md={6}>
+                <Typography variant="h6" className={"purple"}>
+                  Máximo
+                </Typography>
+                {/*checks if suport.maximum_amount is null*/}
+                <Typography>
+                  {suport.maximum_amount === null
+                    ? "N/D"
+                    : suport.maximum_amount + " €"}
+                </Typography>
+              </Grid>
+
+              <Grid item md={6}>
+                <Typography variant="h6" className={"purple"}>
+                  Mínimo
+                </Typography>
+                {/*checks if suport.minimum_amount is null*/}
+                <Typography>
+                  {suport.minimum_amount === null
+                    ? "N/D"
+                    : suport.minimum_amount + " €"}
+                </Typography>
+              </Grid>
+            </Grid>
+
             <Grid item md={12}>
-              <Typography variant="h6">Tags</Typography>
-              {suport.tags.slice(0, 15).map((tag) => (
+              <Typography variant="h6" className={"purple"}>
+                Tags
+              </Typography>
+              {suport.tags.slice(0, suport.tags.length).map((tag) => (
                 <Chip
                   color="primary"
                   variant="outlined"

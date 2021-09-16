@@ -104,9 +104,36 @@
     border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
 .show-new-title {
-  margin-top: 50px !important;
-  text-align: center !important;
+  font-weight: bold !important;
+}
+
+.show-new-grid {
+  text-align: left !important;
+}
+
+.show-list {
+  padding-left: 20px !important;
+  margin-top: 5px !important;
+  margin-bottom: 0px !important;
+}
+
+.show-new-hr-solid {
+  width: auto;
+  margin-left: -31px;
+  margin-right: -31px;
+  margin-top: 20px;
+  border-top: 1px solid #adb5f1;
 }
 
 .back-btn {
@@ -118,6 +145,10 @@
 }
 .back-btn:focus {
   text-decoration: none;
+}
+
+.container-overide {
+  max-width: 1920px !important;
 }
 
 .mx-auto {
@@ -203,7 +234,16 @@
 .paper {
   margin: auto;
   margin-bottom: 80px;
-  width: 700px;
+  width: 900px;
+  height: auto;
+  padding: 30px;
+  text-align: center !important;
+  background-color: rgba(232, 232, 232, 0.74) !important;
+}
+
+.paper-full-width {
+  margin-bottom: 80px;
+  width: -webkit-fill-available;
   height: auto;
   padding: 30px;
   text-align: center !important;
@@ -327,6 +367,10 @@
   border-radius: 50%;
 }
 
+.purple {
+  color: #3146bd;
+}
+
 .chevron-left {
   content:url("./icons/chevron_left_black.png");
   display: flex;
@@ -417,4 +461,16 @@
 
 .chip {
   margin: 8px 4px 0px 4px;
+}
+
+.state-open {
+  color: white !important;
+  font-size: 18px !important;
+  background-color: #01a001 !important;
+}
+
+.state-closed {
+  color: white !important;
+  font-size: 18px !important;
+  background-color: #e00404 !important;
 }

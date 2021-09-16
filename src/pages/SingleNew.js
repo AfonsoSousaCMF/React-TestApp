@@ -1,87 +1,201 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { Image } from 'react-bootstrap';
+import { Image } from "react-bootstrap";
 import LoadingScreen from "../components/LoadingScreen.js";
-import { Typography, Container, Grid, Button } from "@material-ui/core";
 import {
-    Link,
-    withRouter,
-  } from "react-router-dom";
+  Typography,
+  Container,
+  Grid,
+  Button,
+  Chip,
+  Paper,
+} from "@material-ui/core";
+import { Link, withRouter } from "react-router-dom";
 
 const SingleNew = (props) => {
-    const [news, setNew] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [news, setNew] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() =>  {
-        const getNew = async () => {
-            setIsLoading(true);
-            let newsFromServer;
-            newsFromServer = await showNew();
-            // console.log(newsFromServer.data.status)
-            
-            if (newsFromServer.status === 200) {
-                // console.log(newsFromServer.data.data)
-                setNew(newsFromServer.data.data)
-                setIsLoading(false);
-            } else {
-                setIsLoading(false);
-            }
-        }
-        getNew()
-    }, [])
+  useEffect(() => {
+    setIsLoading(true);
+    showNew();
+  }, []);
 
-    // Show New
-    const showNew = async () => {
-        const {newId} = props.match.params
-        // console.log({newId})
-        const res = await Axios.get(`http://sitea-c-1229:8001/api/v1/supports/${newId}`)
-        const data = await res
-        
-        return data
-    }
+  // Show New
+  const showNew = () => {
+    const { newId } = props.match.params;
+    // console.log({newId})
+    Axios.get(
+      `http://sitea-c-1229:8001/api/v1/supports/${newId}?fillCollections=all`
+    ).then((newFromServer) => {
+      setNew(newFromServer.data.data);
+      setIsLoading(false);
+    });
+  };
 
-    return (
-        <>
-            <Container>
-                <LoadingScreen isLoading={isLoading} />
+  return (
+    <>
+      <Container className={"container-overide"}>
+        <LoadingScreen isLoading={isLoading} />
+        {!isLoading && (
+          <Grid container>
+            <Grid container className="mt-2">
+              <Grid item xs={2} md={12}>
+                <Link className="back-btn" to="/">
+                  {/*Go back button*/}
+                  <Button color="primary" variant="contained">
+                    Go Back
+                  </Button>
+                </Link>
+              </Grid>
+            </Grid>
 
-                <Grid container>
-                    <Grid item md={12} className="show-new-title">
-                        <Typography variant="h3">{news.name}</Typography>
-                    </Grid>
+            <Paper className={"paper-full-width my-2"}>
+              <Grid container>
+                <Grid item md={12} className="show-new-grid">
+                  <Typography variant="h5" className="show-new-title">
+                    {news.name}
+                    {news.state ? (
+                      news.state.id === 2 ? (
+                        <Chip
+                          className={"state-open mx-2"}
+                          label={news.state.name}
+                        />
+                      ) : (
+                        <Chip
+                          className={"state-closed mx-2"}
+                          label={news.state.name}
+                        />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <hr className={"show-new-hr-solid"} />
+
+              <Grid container className="mt-2">
+                <Typography variant="h5">Geral</Typography>
+              </Grid>
+
+              {/*<Grid container className="mt-4">*/}
+              {/*  <Image*/}
+              {/*    className="mx-auto"*/}
+              {/*    src="https://via.placeholder.com/500x300"*/}
+              {/*    alt="Image New"*/}
+              {/*    rounded*/}
+              {/*  />*/}
+              {/*</Grid>*/}
+
+              <Grid container className="mt-2">
+                <Grid item xs={5} md={5} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Domínio
+                  </Typography>
+                  {/*checks if news.domain is empty*/}
+                  {news.domain.length === 0 ? (
+                    <Typography>N/D</Typography>
+                  ) : (
+                    <Typography>{news.domain.name}</Typography>
+                  )}
                 </Grid>
 
-                <Grid container className="mt-4">
-                    <Image className="mx-auto" src="https://via.placeholder.com/1200x500" alt="Image New" rounded/>
+                <Grid item xs={5} md={7} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Entidades
+                  </Typography>
+                  {/*checks if news.entities is empty*/}
+                  {news.entities.length === 0 ? (
+                    <Typography>N/D</Typography>
+                  ) : (
+                    <ul className={"show-list"}>
+                      {news.entities.map((entitie) => (
+                        <li key={entitie.id}>{entitie.name}</li>
+                      ))}
+                    </ul>
+                  )}
+                </Grid>
+              </Grid>
+
+              <Grid container className="mt-2">
+                <Grid item xs={5} md={5} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Beneficiários
+                  </Typography>
+                  {/*checks if news.beneficiaries is empty*/}
+                  {news.beneficiaries.length === 0 ? (
+                    <Typography>N/D</Typography>
+                  ) : (
+                    <ul className={"show-list"}>
+                      {news.beneficiaries.map((beneficiarie) => (
+                        <li>{beneficiarie.name}</li>
+                      ))}
+                    </ul>
+                  )}
                 </Grid>
 
-                <Grid container className="mt-2">
-                    <Grid item xs={5} md={3}>
-                        <Typography variant="h5">Começa a:</Typography>
-                        <Typography>{news.starts_at}</Typography>
-                    </Grid>
+                <Grid item xs={5} md={7} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Programas
+                  </Typography>
+                  {/*checks if news.programs is empty*/}
+                  {news.programs.length === 0 ? (
+                    <Typography>N/D</Typography>
+                  ) : (
+                    <ul className={"show-list"}>
+                      {news.programs.map((program) => (
+                        <li key={program.id}>{program.name}</li>
+                      ))}
+                    </ul>
+                  )}
+                </Grid>
+              </Grid>
 
-                    <Grid item xs={2} md={4}>
-                        <Typography variant="h5">Acaba a:</Typography>
-                        <Typography>{news.ends_at}</Typography>
-                    </Grid>
-
-                    <Grid item xs={2} md={4}>
-                        <Typography variant="h5" className="mx-auto">Tags</Typography>
-                        <Typography>{news.keywords}</Typography>
-                    </Grid>
+              <Grid container className="mt-2">
+                <Grid item xs={5} md={5} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Localidade
+                  </Typography>
+                  {/*checks if news.location is empty*/}
+                  {news.location.length === 0 ? (
+                    <Typography>N/D</Typography>
+                  ) : (
+                    <Typography>{news.location.name}</Typography>
+                  )}
                 </Grid>
 
-                <Grid container className="mt-4">
-                    <Grid item xs={2} md={12}>
-                        <Link className="back-btn" to="/">
-                            <Button color="primary" variant="contained" >Go Back</Button>
-                        </Link>
-                    </Grid>
+                <Grid item xs={2} md={2} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Máximo
+                  </Typography>
+                  {/*checks if news.maximum_amount is null*/}
+                  <Typography>
+                    {news.maximum_amount === null
+                      ? "N/D"
+                      : news.maximum_amount + " €"}
+                  </Typography>
                 </Grid>
-            </Container>
-        </>
-    )
-}
 
-export default withRouter(SingleNew)
+                <Grid item xs={2} md={5} className={"text-left"}>
+                  <Typography variant="h6" className={"purple"}>
+                    Mínimo
+                  </Typography>
+                  {/*checks if news.minimum_amount is null*/}
+                  <Typography>
+                    {news.minimum_amount === null
+                      ? "N/D"
+                      : news.minimum_amount + " €"}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        )}
+      </Container>
+    </>
+  );
+};
+
+export default withRouter(SingleNew);

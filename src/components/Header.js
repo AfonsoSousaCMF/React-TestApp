@@ -83,7 +83,7 @@ const Header = (props) => {
           <Menu />
 
           <Typography variant="h6" className={classes.title}>
-            News
+            Observatório Apoios Financeiros
           </Typography>
 
           {authButton}
