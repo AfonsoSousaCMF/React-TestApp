@@ -4,9 +4,6 @@ import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import Menu from "./Menu.js";
 import Dropdown from "react-bootstrap/Dropdown";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import App from "../App.js";
-import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
   NavLink,
@@ -22,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
   },
 }));
 
@@ -82,7 +76,7 @@ const Header = (props) => {
         <Toolbar>
           <Menu />
 
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={"align-items-center"}>
             Observatório Apoios Financeiros
           </Typography>
 

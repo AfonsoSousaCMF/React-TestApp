@@ -12,7 +12,6 @@ import MuiAlert from "@material-ui/lab/Alert";
 import LoadingScreen from "../components/LoadingScreen.js";
 import SuccessAlert from "../components/SuccessAlert";
 import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
   useRouteMatch,
@@ -61,13 +60,16 @@ class Login extends Component {
 
     const onSuccess = ({ data }) => {
       // Set Token on success
-      setClientToken(data.data.token.hash);
       localStorage.setItem("token", data.data.token.hash);
       localStorage.setItem("tokenExpiration", data.data.token.expiration);
       localStorage.setItem("authUser", data.data.username);
       // console.log("Token", localStorage.getItem("token"));
       // console.log("User", localStorage.getItem("authUser"));
-      this.setState({ isLoading: false, isLoggedIn: true, toggleSuccessAlert: true });
+      this.setState({
+        isLoading: false,
+        isLoggedIn: true,
+        toggleSuccessAlert: true,
+      });
 
       // Redirects the user after successful Login
       this.props.history.push("/backoffice/dashboard");

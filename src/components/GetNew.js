@@ -52,16 +52,16 @@ const GetNew = (props) => {
         />
       </Grid>
 
-      {news.map((suport) => (
-        <Paper className={"paper"} key={suport.id}>
+      {news.map((support) => (
+        <Paper className={"paper"} key={support.id}>
           <Grid container spacing={2}>
             <Grid item md={12}>
               <Link
-                to={`/${suport.id}`}
-                params={suport}
+                to={`/${support.id}`}
+                params={support}
                 className="link-show-new"
               >
-                <Typography variant="h5">{suport.name}</Typography>
+                <Typography variant="h5">{support.name}</Typography>
               </Link>
             </Grid>
             <Divider />
@@ -71,12 +71,14 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Entidades
                 </Typography>
-                {/*checks if suport.entities is empty*/}
-                {suport.entities.length === 0 ? (
-                  <Typography>N/D</Typography>
+                {/*checks if support.entities is empty*/}
+                {support.entities.length === 0 ? (
+                  <Typography variant="body1">N/D</Typography>
                 ) : (
-                  suport.entities.map((entitie) => (
-                    <Typography key={entitie.id}>{entitie.name}</Typography>
+                  support.entities.map((entitie) => (
+                    <Typography key={entitie.id} variant="body1">
+                      {entitie.name}
+                    </Typography>
                   ))
                 )}
               </Grid>
@@ -85,12 +87,14 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Programa
                 </Typography>
-                {/*checks if suport.programs is empty*/}
-                {suport.programs.length === 0 ? (
-                  <Typography>N/D</Typography>
+                {/*checks if support.programs is empty*/}
+                {support.programs.length === 0 ? (
+                  <Typography variant="body1">N/D</Typography>
                 ) : (
-                  suport.programs.map((program) => (
-                    <Typography key={program.id}>{program.name}</Typography>
+                  support.programs.map((program) => (
+                    <Typography key={program.id} variant="body1">
+                      {program.name}
+                    </Typography>
                   ))
                 )}
               </Grid>
@@ -101,9 +105,9 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Tipo de Financiamento
                 </Typography>
-                {/*checks if suport.fee is null*/}
-                <Typography>
-                  {suport.fee === null ? "N/D" : suport.fee.name}
+                {/*checks if support.fee is null*/}
+                <Typography variant="body1">
+                  {support.fee === null ? "N/D" : support.fee.name}
                 </Typography>
               </Grid>
 
@@ -111,12 +115,14 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Sectores
                 </Typography>
-                {/*checks if suport.sectors is empty*/}
-                {suport.sectors.length === 0 ? (
-                  <Typography>N/D</Typography>
+                {/*checks if support.sectors is empty*/}
+                {support.sectors.length === 0 ? (
+                  <Typography variant="body1">N/D</Typography>
                 ) : (
-                  suport.sectors.map((sector) => (
-                    <Typography key={sector.id}>{sector.name}</Typography>
+                  support.sectors.map((sector) => (
+                    <Typography key={sector.id} variant="body1">
+                      {sector.name}
+                    </Typography>
                   ))
                 )}
               </Grid>
@@ -125,12 +131,14 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Categorias
                 </Typography>
-                {/*checks if suport.categories is empty*/}
-                {suport.categories.length === 0 ? (
-                  <Typography>-</Typography>
+                {/*checks if support.categories is empty*/}
+                {support.categories.length === 0 ? (
+                  <Typography variant="body1">-</Typography>
                 ) : (
-                  suport.categories.map((categorie) => (
-                    <Typography key={categorie.id}>{categorie.name}</Typography>
+                  support.categories.map((categorie) => (
+                    <Typography key={categorie.id} variant="body1">
+                      {categorie.name}
+                    </Typography>
                   ))
                 )}
               </Grid>
@@ -141,15 +149,15 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Estado
                 </Typography>
-                <Typography>{suport.state.name}</Typography>
+                <Typography variant="body1">{support.state.name}</Typography>
               </Grid>
 
               <Grid item md={4}>
                 <Typography variant="h6" className={"purple"}>
                   Data Abertura:
                 </Typography>
-                <Typography>
-                  {suport.starts_at === null ? "N/D" : suport.starts_at}
+                <Typography variant="body1">
+                  {support.starts_at === null ? "N/D" : support.starts_at}
                 </Typography>
               </Grid>
 
@@ -157,8 +165,8 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Data Fecho:
                 </Typography>
-                <Typography>
-                  {suport.ends_at === null ? "N/D" : suport.ends_at}
+                <Typography variant="body1">
+                  {support.ends_at === null ? "N/D" : support.ends_at}
                 </Typography>
               </Grid>
             </Grid>
@@ -168,11 +176,11 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Máximo
                 </Typography>
-                {/*checks if suport.maximum_amount is null*/}
-                <Typography>
-                  {suport.maximum_amount === null
+                {/*checks if support.maximum_amount is null*/}
+                <Typography variant="body1">
+                  {support.maximum_amount === null
                     ? "N/D"
-                    : suport.maximum_amount + " €"}
+                    : support.maximum_amount + " €"}
                 </Typography>
               </Grid>
 
@@ -180,11 +188,11 @@ const GetNew = (props) => {
                 <Typography variant="h6" className={"purple"}>
                   Mínimo
                 </Typography>
-                {/*checks if suport.minimum_amount is null*/}
-                <Typography>
-                  {suport.minimum_amount === null
+                {/*checks if support.minimum_amount is null*/}
+                <Typography variant="body1">
+                  {support.minimum_amount === null
                     ? "N/D"
-                    : suport.minimum_amount + " €"}
+                    : support.minimum_amount + " €"}
                 </Typography>
               </Grid>
             </Grid>
@@ -193,7 +201,7 @@ const GetNew = (props) => {
               <Typography variant="h6" className={"purple"}>
                 Tags
               </Typography>
-              {suport.tags.slice(0, suport.tags.length).map((tag) => (
+              {support.tags.slice(0, support.tags.length).map((tag) => (
                 <Chip
                   color="primary"
                   variant="outlined"

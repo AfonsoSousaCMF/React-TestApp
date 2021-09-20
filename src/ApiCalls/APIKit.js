@@ -1,5 +1,9 @@
 //<ROOT>/shared/APIKit.js
 import axios from "axios";
+// import { useHistory } from "react-router-dom";
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
+// const history = useHistory();
 
 // Create axios client, pre-configured with baseURL
 let APIKit = axios.create({
@@ -12,8 +16,7 @@ export const setClientToken = (token) => {
   APIKit.interceptors.request.use(function (config) {
     config.headers.Authorization = `Bearer ${token}`;
     // if (config.status == 401) {
-    //   //window.location('/sign-in');
-    //   config;
+    //   history.push("/");
     // }
     return config;
   });

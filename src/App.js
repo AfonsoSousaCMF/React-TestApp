@@ -8,7 +8,7 @@ import SingleNew from "./pages/SingleNew.js";
 import Dashboard from "./pages/Dashboard.js";
 import ScrollUp from "./components/ScrollUp";
 import SessionTimeout from "./ApiCalls/SessionTimeout.js";
-import { Container, Box, Button, makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import {
   BrowserRouter as Router,
   Switch,
@@ -65,22 +65,7 @@ function App(props) {
   const classes = useStyles();
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const authContext = createContext(() => {
-    let token = localStorage.token;
-    // const { exp } = jwtDecode(token);
-    // Refresh the token a minute early to avoid latency issues
-    const expirationTime = token * 1000 - 60000;
-    if (Date.now() >= expirationTime) {
-      localStorage.clear();
-      history.push('/sign-in');
-      window.location.reload();
-    }
-    return {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    };
-  });
+  const authContext = createContext();
 
   function useAuth() {
     return useContext(authContext);

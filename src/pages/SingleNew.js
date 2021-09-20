@@ -9,7 +9,9 @@ import {
   Button,
   Chip,
   Paper,
+  Fab,
 } from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { Link, withRouter } from "react-router-dom";
 
 const SingleNew = (props) => {
@@ -43,9 +45,9 @@ const SingleNew = (props) => {
               <Grid item xs={2} md={12}>
                 <Link className="back-btn" to="/">
                   {/*Go back button*/}
-                  <Button color="primary" variant="contained">
-                    Go Back
-                  </Button>
+                  <Fab color="primary">
+                    <ArrowBackIcon />
+                  </Fab>
                 </Link>
               </Grid>
             </Grid>
@@ -98,7 +100,7 @@ const SingleNew = (props) => {
                   {news.domain.length === 0 ? (
                     <Typography>N/D</Typography>
                   ) : (
-                    <Typography>{news.domain.name}</Typography>
+                    <Typography variant="body1">{news.domain.name}</Typography>
                   )}
                 </Grid>
 
@@ -126,7 +128,7 @@ const SingleNew = (props) => {
                   </Typography>
                   {/*checks if news.beneficiaries is empty*/}
                   {news.beneficiaries.length === 0 ? (
-                    <Typography>N/D</Typography>
+                    <Typography variant="body1">N/D</Typography>
                   ) : (
                     <ul className={"show-list"}>
                       {news.beneficiaries.map((beneficiarie) => (
@@ -142,7 +144,7 @@ const SingleNew = (props) => {
                   </Typography>
                   {/*checks if news.programs is empty*/}
                   {news.programs.length === 0 ? (
-                    <Typography>N/D</Typography>
+                    <Typography variant="body1">N/D</Typography>
                   ) : (
                     <ul className={"show-list"}>
                       {news.programs.map((program) => (
@@ -162,7 +164,9 @@ const SingleNew = (props) => {
                   {news.location.length === 0 ? (
                     <Typography>N/D</Typography>
                   ) : (
-                    <Typography>{news.location.name}</Typography>
+                    <Typography variant="body1">
+                      {news.location.name}
+                    </Typography>
                   )}
                 </Grid>
 
@@ -171,7 +175,7 @@ const SingleNew = (props) => {
                     Máximo
                   </Typography>
                   {/*checks if news.maximum_amount is null*/}
-                  <Typography>
+                  <Typography variant="body1">
                     {news.maximum_amount === null
                       ? "N/D"
                       : news.maximum_amount + " €"}
@@ -183,11 +187,49 @@ const SingleNew = (props) => {
                     Mínimo
                   </Typography>
                   {/*checks if news.minimum_amount is null*/}
-                  <Typography>
+                  <Typography variant="body1">
                     {news.minimum_amount === null
                       ? "N/D"
                       : news.minimum_amount + " €"}
                   </Typography>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={5} className={"text-left mt-2"}>
+                <Grid item md={12}>
+                  <Typography variant="h6" className={"purple"}>
+                    Palavras-Chave
+                  </Typography>
+                  {news.tags.slice(0, news.tags.length).map((tag) => (
+                    <Chip
+                      color="primary"
+                      variant="outlined"
+                      className={"chip"}
+                      size="small"
+                      label={tag}
+                      key={tag}
+                    />
+                  ))}
+                </Grid>
+              </Grid>
+
+              <hr className={"show-new-hr-dashed mt-2"} />
+
+              <Grid container spacing={2} className={"links-container"}>
+                <Grid container>
+                  <Typography variant="h5">Links Oficiais</Typography>
+                </Grid>
+
+                <Grid container>
+                  <Typography variant="h6" className={"purple mt-2"}>
+                    URL
+                  </Typography>
+                </Grid>
+
+                <Grid container>
+                  <Link to={news.url} className={"mt-1"}>
+                    {news.url === null ? "-" : news.url}
+                  </Link>
                 </Grid>
               </Grid>
             </Paper>
