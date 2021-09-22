@@ -8,6 +8,7 @@ import SingleNew from "./pages/SingleNew.js";
 import Dashboard from "./pages/Dashboard.js";
 import ScrollUp from "./components/ScrollUp";
 import SessionTimeout from "./ApiCalls/SessionTimeout.js";
+import NotFound from "./pages/404.js";
 import { Button, makeStyles } from "@material-ui/core";
 import {
   BrowserRouter as Router,
@@ -20,6 +21,7 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
+import Supports from "./pages/Supports";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -148,6 +150,9 @@ function App(props) {
             <PrivateRoute path="/backoffice/dashboard" exact>
               <Dashboard />
             </PrivateRoute>
+            <PrivateRoute path="/backoffice/supports" exact>
+              <Supports />
+            </PrivateRoute>
 
             <Route path="/sign-in" exact>
               <Login />
@@ -161,7 +166,7 @@ function App(props) {
               exact
               render={(props) => <SingleNew newId={props.match.params.newId} />}
             />
-            <Route render={() => <h1>404 Not Found</h1>} />
+            <Route render={() => <NotFound />} />
           </Switch>
           <ScrollUp />
         </div>

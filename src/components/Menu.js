@@ -13,6 +13,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import IconButton from "@material-ui/core/IconButton";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import MenuIcon from "@material-ui/icons/Menu";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -61,15 +62,26 @@ export default function Menu({ props }) {
         </NavLink>
 
         {localStorage.token != null || "" ? (
-          <NavLink to="/backoffice/dashboard" className="link-menu">
-            <Divider />
-            <ListItem button className="link-menu">
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </NavLink>
+          <div>
+            <NavLink to="/backoffice/dashboard" className="link-menu">
+              <Divider />
+              <ListItem button className="link-menu">
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+            </NavLink>
+            <NavLink to="/backoffice/supports" className="link-menu">
+              <Divider />
+              <ListItem button className="link-menu">
+                <ListItemIcon>
+                  <AttachMoneyIcon />
+                </ListItemIcon>
+                <ListItemText primary="Apoios" />
+              </ListItem>
+            </NavLink>
+          </div>
         ) : (
           <Divider />
         )}

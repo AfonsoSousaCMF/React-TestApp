@@ -47,9 +47,15 @@ const Dashboard = (props) => {
         },
       }
     ).then((supportsFromServer) => {
-      setDashboardSupports(supportsFromServer.data.data.supports);
-      setDashboardHistory(supportsFromServer.data.data.supportHistoryList);
-      setIsLoading(false);
+      if (supportsFromServer.status === "401") {
+        localStorage.clear();
+        props.history.push("/sign-in");
+        window.location.reload();
+      } else {
+        setDashboardSupports(supportsFromServer.data.data.supports);
+        setDashboardHistory(supportsFromServer.data.data.supportHistoryList);
+        setIsLoading(false);
+      }
     });
   };
 
@@ -69,7 +75,7 @@ const Dashboard = (props) => {
 
             <Grid container spacing={2}>
               <Grid item md={6}>
-                <Paper className="paper-full-width text-left">
+                <Paper className="paper-full-width-dashboard text-left">
                   <div className="square-div">
                     <CalendarTodayIcon className="CalendarIcon-size" />
                   </div>
@@ -78,7 +84,7 @@ const Dashboard = (props) => {
                     <Typography variant="h6" className={"show-new-title"}>
                       Término
                     </Typography>
-                    <Typography variant="body1">
+                    <Typography variant="body2">
                       Mais próximo em:{" "}
                       {dashboardSupports.length === 0
                         ? "-"
@@ -91,7 +97,6 @@ const Dashboard = (props) => {
                   <Grid container spacing={0}>
                     <Grid item md={12} className={"text-left"}>
                       <Timeline position="alternate">
-                        {console.log("supports", dashboardSupports)}
                         {dashboardSupports.length === 0
                           ? "no Results"
                           : dashboardSupports.map((item) => (
@@ -99,7 +104,6 @@ const Dashboard = (props) => {
                                 <TimelineOppositeContent
                                   sx={{ m: "auto 0", flex: 0 }}
                                   color="text.secondary"
-                                  className={"flex-0"}
                                 >
                                   <Typography variant="body2" component="p">
                                     <strong>
@@ -118,28 +122,33 @@ const Dashboard = (props) => {
                                 </TimelineSeparator>
                                 <TimelineContent
                                   sx={{ py: "12px", px: 2, pt: 0 }}
+                                  className={"flex-5"}
                                 >
                                   <Typography variant="body2" component="p">
                                     <strong className={"mr-1"}>
                                       Aviso({item.id}):
                                     </strong>{" "}
-                                    {item.name}
+                                    {item.name === null ? "N/D" : item.name}
                                   </Typography>{" "}
                                   <Typography variant="body2" component="p">
                                     <strong className={"mr-1"}>
                                       Entidade:
                                     </strong>{" "}
-                                    {item.entities.map(
-                                      (entitie) => entitie.name
-                                    )}
+                                    {item.entities.length === 0
+                                      ? "N/D"
+                                      : item.entities.map(
+                                          (entitie) => entitie.name
+                                        )}
                                   </Typography>{" "}
                                   <Typography variant="body2" component="p">
                                     <strong className={"mr-1"}>
                                       Programa:
                                     </strong>{" "}
-                                    {item.programs.map(
-                                      (program) => program.name
-                                    )}
+                                    {item.programs.length === 0
+                                      ? "N/D"
+                                      : item.programs.map(
+                                          (program) => program.name
+                                        )}
                                   </Typography>
                                 </TimelineContent>
                               </TimelineItem>
@@ -151,7 +160,7 @@ const Dashboard = (props) => {
               </Grid>
 
               <Grid item md={6}>
-                <Paper className="paper-full-width">
+                <Paper className="paper-full-width-dashboard">
                   <div className="square-div">
                     <HistoryIcon className="historyIcon-size" />
                   </div>
@@ -160,11 +169,11 @@ const Dashboard = (props) => {
                     <Typography variant="h6" className={"show-new-title"}>
                       Histórico alterações
                     </Typography>
-                    <Typography variant="body1">
+                    <Typography variant="body2">
                       Última alteração:{" "}
                       {dashboardHistory.length === 0
                         ? "-"
-                        : dashboardHistory[0].ends_at.split(" 00:00:00")}{" "}
+                        : dashboardHistory[0].deleted_at}
                     </Typography>
                   </div>
 
@@ -173,6 +182,7 @@ const Dashboard = (props) => {
                   <Grid container spacing={5}>
                     <Grid item md={12}>
                       <Timeline position="alternate">
+                        {console.log("History", dashboardHistory)}
                         {dashboardHistory.length === 0
                           ? "no Results"
                           : dashboardHistory.map((item) => (
@@ -181,37 +191,66 @@ const Dashboard = (props) => {
                                   sx={{ m: "auto 0" }}
                                   variant="body2"
                                   color="text.secondary"
-                                  className={"flex-0"}
                                 >
                                   <Typography variant="body2" component="p">
                                     <strong>
-                                      {item.ends_at === null
+                                      {item.created_at === null
                                         ? "00:00"
-                                        : item.ends_at.split(" 00:00:00")}
+                                        : item.created_at}
                                     </strong>
                                   </Typography>
                                 </TimelineOppositeContent>
                                 <TimelineSeparator>
                                   <TimelineConnector />
-                                  <TimelineDot>
-                                    {() => {
-                                      switch (item.img) {
-                                        case "fas fa-trash text-danger":
-                                          return <DeleteOutlineIcon />;
-                                        case "fas fa-plus-square text-success":
-                                          return <DeleteOutlineIcon />;
-                                        case "fas fa-edit text-info":
-                                          return <EditOutlinedIcon />;
-                                        default:
-                                          return "";
-                                      }
-                                    }}
-                                  </TimelineDot>
+                                  {(() => {
+                                    switch (item.img) {
+                                      case "fas fa-trash text-danger":
+                                        return (
+                                          <TimelineDot className="Danger">
+                                            <DeleteOutlineIcon />
+                                          </TimelineDot>
+                                        );
+                                      case "fas fa-plus-square text-success":
+                                        return (
+                                          <TimelineDot className="Success">
+                                            <AddBoxOutlinedIcon />
+                                          </TimelineDot>
+                                        );
+                                      case "fas fa-edit text-info":
+                                        return (
+                                          <TimelineDot className="Info">
+                                            <EditOutlinedIcon />
+                                          </TimelineDot>
+                                        );
+                                      default:
+                                        return "";
+                                    }
+                                  })()}
                                   <TimelineConnector />
                                 </TimelineSeparator>
-                                <TimelineContent sx={{ py: "12px", px: 2 }}>
-                                  <Typography variant="h6" component="span">
-                                    Code
+                                <TimelineContent
+                                  sx={{ py: "12px", px: 2 }}
+                                  className="flex-5"
+                                >
+                                  <Typography variant="body2" component="p">
+                                    <strong className={"mr-1"}>
+                                      Apoio({item.id}):
+                                    </strong>{" "}
+                                    {item.name === null ? "N/D" : item.name}
+                                  </Typography>{" "}
+                                  <Typography variant="body2" component="p">
+                                    <strong className={"mr-1"}>
+                                      Utilizador:
+                                    </strong>{" "}
+                                    {item.user_email === null
+                                      ? "N/D"
+                                      : item.user_email}
+                                  </Typography>{" "}
+                                  <Typography variant="body2" component="p">
+                                    <strong className={"mr-1"}>Ação:</strong>{" "}
+                                    {item.action_name === null
+                                      ? "N/D"
+                                      : item.action_name}
                                   </Typography>
                                 </TimelineContent>
                               </TimelineItem>

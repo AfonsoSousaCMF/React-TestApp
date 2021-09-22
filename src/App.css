@@ -265,6 +265,20 @@
   flex: 0 !important;
   flex-shrink: 0 !important;
 }
+.flex-5 {
+  flex: 5 !important;
+  flex-shrink: 0 !important;
+}
+
+.Danger {
+  background-color: darkred !important;
+}
+.Success {
+  background-color: green !important;
+}
+.Info {
+  background-color: darkcyan !important;
+}
 
 .paper {
   margin: auto;
@@ -276,16 +290,38 @@
   background-color: rgba(234, 234, 234, 0.74) !important;
 }
 
+.fab-add {
+  display: flex !important;
+
+}
+
 .paper-full-width {
   margin-bottom: 80px;
   width: -webkit-fill-available;
   height: auto;
+  padding: 30px;
+  background-color: rgba(234, 234, 234, 0.74) !important;
+}
+
+.paper-full-width-dashboard {
+  width: -webkit-fill-available;
+  height: 95%;
   padding: 30px;
   /*text-align: center !important;*/
   background-color: rgba(234, 234, 234, 0.74) !important;
 }
 
 .paper-login {
+  margin: auto;
+  margin-bottom: 80px;
+  margin-top: 80px;
+  width: 700px;
+  height: auto;
+  padding: 30px;
+  text-align: center !important;
+  background-color: rgba(223, 223, 223, 0.74) !important;
+}
+.paper-404 {
   margin: auto;
   margin-bottom: 80px;
   margin-top: 80px;
