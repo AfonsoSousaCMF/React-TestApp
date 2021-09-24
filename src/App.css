@@ -601,6 +601,10 @@
   color: #300bd4 !important;
 }
 
+.input-label {
+  padding-left: 15px !important;
+}
+
 .search {
   background-color: #dbdbdb !important;
   position: relative;

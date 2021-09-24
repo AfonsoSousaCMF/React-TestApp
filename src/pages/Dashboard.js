@@ -182,7 +182,6 @@ const Dashboard = (props) => {
                   <Grid container spacing={5}>
                     <Grid item md={12}>
                       <Timeline position="alternate">
-                        {console.log("History", dashboardHistory)}
                         {dashboardHistory.length === 0
                           ? "no Results"
                           : dashboardHistory.map((item) => (
