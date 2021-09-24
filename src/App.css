@@ -256,6 +256,18 @@
 .mr-1 {
   margin-right: 1rem !important;
 }
+.ml-4 {
+  margin-left: 4rem !important;
+}
+.ml-3 {
+  margin-left: 3rem !important;
+}
+.ml-2 {
+  margin-left: 2rem !important;
+}
+.ml-1 {
+  margin-left: 1rem !important;
+}
 
 .form-input {
   width: auto !important;
@@ -269,6 +281,8 @@
   flex: 5 !important;
   flex-shrink: 0 !important;
 }
+
+
 
 .Danger {
   background-color: darkred !important;
@@ -292,7 +306,8 @@
 
 .fab-add {
   display: flex !important;
-
+  justify-content: flex-end !important;
+  margin-bottom: 20px !important;
 }
 
 .paper-full-width {
@@ -574,3 +589,34 @@
   font-size: 18px !important;
   background-color: #e00404 !important;
 }
+
+.input-search {
+  padding: 1px 1px 1px 0px;
+  padding-left: 47px;
+  width: 100%;
+}
+
+.form-controller {
+  width: auto !important;
+  color: #300bd4 !important;
+}
+
+.search {
+  background-color: #dbdbdb !important;
+  position: relative;
+  border-radius: 10px;
+  margin-left: 0px;
+  margin-right: 10px;
+  width: auto;
+}
+.search:hover {
+  background-color: #d9d5d5 !important;
+}
+ .select-input {
+   background-color: rgba(191, 190, 190, 0.35);
+   border-radius: 5px;
+ }
+.select-input:hover {
+  background-color: rgba(144, 143, 143, 0.29);
+}
+

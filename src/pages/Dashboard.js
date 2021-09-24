@@ -69,7 +69,7 @@ const Dashboard = (props) => {
           <Grid container>
             <Grid container spacing={2}>
               <Grid item md={12}>
-                <h1>Dashboard</h1>
+                <h2>Dashboard</h2>
               </Grid>
             </Grid>
 
