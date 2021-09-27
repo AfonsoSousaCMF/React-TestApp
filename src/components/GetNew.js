@@ -44,7 +44,12 @@ const GetNew = (props) => {
     <>
       <LoadingScreen isLoading={isLoading} />
 
-      <Grid container spacing={2} className="grid-pagination" id="ScrollUp">
+      <Grid
+        container
+        spacing={2}
+        className="grid-pagination mt-3 bounceInUp"
+        id="ScrollUp"
+      >
         <Pagination
           changePage={fetchNewsPaginate}
           data={pages}

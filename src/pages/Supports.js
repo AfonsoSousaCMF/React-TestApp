@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import CustomChips from "react-custom-chips";
 import { NavLink } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingScreen from "../components/LoadingScreen";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import SearchIcon from "@material-ui/icons/Search";
@@ -26,6 +27,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import "date-fns";
+import { Nav, Tab, Tabs } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -68,6 +70,7 @@ const Supports = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [key, setKey] = useState("home");
 
   const handleShow = () => {
     setIsOpen(true);
@@ -306,7 +309,7 @@ const Supports = () => {
                             variant="filled"
                             id="standard-helperText"
                             label="Tags"
-                            helperText="Escreva aqui as tags, cada uma tem q ter um enter entre cada uma"
+                            helperText="Escreva aqui as tags, cada uma tem que ter um enter entre cada uma"
                           />
                           {/*<CustomChips onChange={onChange} />*/}
                         </Grid>
@@ -316,12 +319,57 @@ const Supports = () => {
                         <Grid item md={6}>
                           <Typography variant={"h6"}>Data</Typography>
                           <Grid container>
-                            <Grid item md={6}>
-                              Data
-                            </Grid>
-                            <Grid item md={6}>
-                              Intrevalo
-                            </Grid>
+                            <Tab.Container
+                              id="left-tabs-example"
+                              defaultActiveKey="first"
+                            >
+                              <Grid container>
+                                <Grid item md={12}>
+                                  <Nav variant="pills" className="flex-row">
+                                    <Nav.Item>
+                                      <Nav.Link eventKey="first">Data</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                      <Nav.Link eventKey="second">
+                                        Intervalo
+                                      </Nav.Link>
+                                    </Nav.Item>
+                                  </Nav>
+                                </Grid>
+                              </Grid>
+
+                              <Grid container>
+                                <Grid item md={12}>
+                                  <Tab.Content>
+                                    <Tab.Pane eventKey="first">
+                                      here somehth
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="second">
+                                      <MuiPickersUtilsProvider
+                                        utils={DateFnsUtils}
+                                      >
+                                        <KeyboardDatePicker
+                                          disableToolbar
+                                          variant="inline"
+                                          format="dd/MM/yyyy"
+                                          margin="normal"
+                                          id="date-picker-inline"
+                                          label="Até"
+                                          value={selectedDate}
+                                          onChange={handleDateChange}
+                                          classes={{
+                                            root: classes.formControl,
+                                          }}
+                                          KeyboardButtonProps={{
+                                            "aria-label": "change date",
+                                          }}
+                                        />
+                                      </MuiPickersUtilsProvider>
+                                    </Tab.Pane>
+                                  </Tab.Content>
+                                </Grid>
+                              </Grid>
+                            </Tab.Container>
                           </Grid>
 
                           <Grid container>
@@ -363,26 +411,7 @@ const Supports = () => {
                           </Grid>
 
                           <Grid container>
-                            <Grid item md={12}>
-                              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                  disableToolbar
-                                  variant="inline"
-                                  format="dd/MM/yyyy"
-                                  margin="normal"
-                                  id="date-picker-inline"
-                                  label="De"
-                                  value={selectedDate}
-                                  onChange={handleDateChange}
-                                  classes={{
-                                    root: classes.formControl,
-                                  }}
-                                  KeyboardButtonProps={{
-                                    "aria-label": "change date",
-                                  }}
-                                />
-                              </MuiPickersUtilsProvider>
-                            </Grid>
+                            <Grid item md={12}></Grid>
                           </Grid>
                         </Grid>
                       </Grid>

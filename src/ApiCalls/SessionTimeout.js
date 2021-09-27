@@ -6,13 +6,11 @@ import { useHistory } from "react-router-dom";
 let countdownInterval;
 let timeout;
 
-
 const SessionTimeout = ({ isLoggedIn, logOut, props }) => {
   const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
   const [timeoutCountdown, setTimeoutCountdown] = useState(0);
   const idleTimer = useRef(null);
   let history = useHistory();
-
 
   const clearSessionTimeout = () => {
     clearTimeout(timeout);
@@ -74,7 +72,7 @@ const SessionTimeout = ({ isLoggedIn, logOut, props }) => {
         onActive={onActive}
         onIdle={onIdle}
         debounce={250}
-        timeout={5400000}
+        timeout={540000}
       />
       <SessionTimeoutDialog
         countdown={timeoutCountdown}
