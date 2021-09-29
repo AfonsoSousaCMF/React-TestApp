@@ -89,7 +89,9 @@
 
 .auth-dropdown-menu {
   background-color: transparent !important;
+  border-color: transparent !important;
   padding-top: 3px;
+  transform: translate(60px, 36px) !important;
 }
 
 .auth-dropdown-item {
@@ -126,6 +128,10 @@
 }
 .text-right {
   text-align: right !important;
+}
+
+.bold {
+  font-weight: bold !important;
 }
 
 .show-new-title {
@@ -375,6 +381,9 @@
   justify-content: center !important;
   margin-bottom: 20px !important;
 }
+.align-right {
+  justify-content: right !important;
+}
 
 .pagination {
   display: flex !important;
@@ -569,6 +578,11 @@
 
 .username-avatar {
   vertical-align: middle;
+}
+
+.align-middle {
+  display: flex !important;
+  vertical-align: middle !important;
 }
 
 .chip {

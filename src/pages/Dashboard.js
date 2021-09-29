@@ -47,7 +47,7 @@ const Dashboard = (props) => {
         },
       }
     ).then((supportsFromServer) => {
-      if (supportsFromServer.status === "401") {
+      if (supportsFromServer.status === 401) {
         localStorage.clear();
         props.history.push("/sign-in");
         window.location.reload();
@@ -68,7 +68,7 @@ const Dashboard = (props) => {
         {!isLoading && (
           <Grid container>
             <Grid container spacing={2}>
-              <Grid item md={12}>
+              <Grid item md={12} className={"mt-3"}>
                 <h2>Dashboard</h2>
               </Grid>
             </Grid>

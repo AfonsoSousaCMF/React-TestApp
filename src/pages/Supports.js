@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import CustomChips from "react-custom-chips";
-import { NavLink } from "react-router-dom";
+import SupportsTable from "../components/SupportsTable.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingScreen from "../components/LoadingScreen";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
@@ -28,6 +28,8 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import "date-fns";
 import { Nav, Tab, Tabs } from "react-bootstrap";
+import APIKit from "../ApiCalls/APIKit";
+import { Pagination } from "react-laravel-paginex";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -65,12 +67,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Supports = () => {
+const Supports = (props) => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
+  const [supports, setSupports] = useState([]);
+  const [pages, setPages] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [key, setKey] = useState("home");
 
   const handleShow = () => {
     setIsOpen(true);
@@ -79,12 +82,47 @@ const Supports = () => {
     setIsOpen(false);
   };
 
-  const onChange = (chipsData) => {
-    /* ... */
-  };
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchSupports(1);
+  }, []);
+
+  const fetchSupports = (
+    page,
+    order = "created_at+desc",
+    token = localStorage.token,
+    data = null
+  ) => {
+    APIKit.get(
+      "http://sitea-c-1229:8001/api/v1/backoffice/supports?order=" +
+        order +
+        "&fillCollections=all&page=" +
+        page,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((supportsFromServer) => {
+      if (supportsFromServer.status === 401) {
+        localStorage.clear();
+        props.history.push("/sign-in");
+        window.location.reload();
+      } else {
+        setPages(supportsFromServer.data);
+        setSupports(supportsFromServer.data.data);
+        console.log("here", supportsFromServer);
+        setIsLoading(false);
+      }
+    });
+  };
+
+  const fetchSupportsPaginate = (data) => {
+    fetchSupports(data.page, data.order, data.token, data);
   };
 
   return (
@@ -94,7 +132,7 @@ const Supports = () => {
       {!isLoading && (
         <Grid container>
           <Grid container spacing={2}>
-            <Grid item md={12}>
+            <Grid item md={12} className={"mt-3"}>
               <h2>Apoios</h2>
             </Grid>
           </Grid>
@@ -132,7 +170,11 @@ const Supports = () => {
                         </Grid>
 
                         <Grid item md={1}>
-                          <Button variant="contained" color="primary">
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            type={"submit"}
+                          >
                             Pesquisar
                           </Button>
                         </Grid>
@@ -147,10 +189,10 @@ const Supports = () => {
                         className={"mr-2"}
                         onClick={handleHide}
                       >
-                        Descartar
+                        <strong>Descartar</strong>
                       </Button>
                       <Button color="primary" onClick={handleShow}>
-                        Pesquisa avançada
+                        <strong>Pesquisa avançada</strong>
                       </Button>
                     </Grid>
                   </Grid>
@@ -315,35 +357,72 @@ const Supports = () => {
                         </Grid>
                       </Grid>
 
-                      <Grid container spacing={2}>
+                      <Grid container spacing={4}>
                         <Grid item md={6}>
-                          <Typography variant={"h6"}>Data</Typography>
-                          <Grid container>
-                            <Tab.Container
-                              id="left-tabs-example"
-                              defaultActiveKey="first"
-                            >
+                          <Tab.Container
+                            id="left-tabs-example"
+                            defaultActiveKey="first"
+                          >
+                            <Typography variant={"h6"} className={"mb-2"}>
+                              Data
+                            </Typography>
+                            <Grid container>
                               <Grid container>
                                 <Grid item md={12}>
                                   <Nav variant="pills" className="flex-row">
-                                    <Nav.Item>
-                                      <Nav.Link eventKey="first">Data</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                      <Nav.Link eventKey="second">
-                                        Intervalo
-                                      </Nav.Link>
-                                    </Nav.Item>
+                                    <Grid container>
+                                      <Grid item md={6}>
+                                        <Nav.Item>
+                                          <Nav.Link
+                                            eventKey="first"
+                                            className={"text-center"}
+                                          >
+                                            Data
+                                          </Nav.Link>
+                                        </Nav.Item>
+                                      </Grid>
+                                      <Grid item md={6}>
+                                        <Nav.Item>
+                                          <Nav.Link
+                                            eventKey="second"
+                                            className={"text-center"}
+                                          >
+                                            Intervalo
+                                          </Nav.Link>
+                                        </Nav.Item>
+                                      </Grid>
+                                    </Grid>
                                   </Nav>
                                 </Grid>
                               </Grid>
 
                               <Grid container>
                                 <Grid item md={12}>
+                                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                      disableToolbar
+                                      variant="inline"
+                                      format="dd/MM/yyyy"
+                                      margin="normal"
+                                      id="date-picker-inline"
+                                      label="De"
+                                      value={selectedDate}
+                                      onChange={handleDateChange}
+                                      classes={{
+                                        root: classes.formControl,
+                                      }}
+                                      KeyboardButtonProps={{
+                                        "aria-label": "change date",
+                                      }}
+                                    />
+                                  </MuiPickersUtilsProvider>
+                                </Grid>
+                              </Grid>
+
+                              <Grid container>
+                                <Grid item md={12}>
                                   <Tab.Content>
-                                    <Tab.Pane eventKey="first">
-                                      here somehth
-                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="first"></Tab.Pane>
                                     <Tab.Pane eventKey="second">
                                       <MuiPickersUtilsProvider
                                         utils={DateFnsUtils}
@@ -369,56 +448,151 @@ const Supports = () => {
                                   </Tab.Content>
                                 </Grid>
                               </Grid>
-                            </Tab.Container>
-                          </Grid>
-
-                          <Grid container>
-                            <Grid item md={12}>
-                              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                  disableToolbar
-                                  variant="inline"
-                                  format="dd/MM/yyyy"
-                                  margin="normal"
-                                  id="date-picker-inline"
-                                  label="De"
-                                  value={selectedDate}
-                                  onChange={handleDateChange}
-                                  classes={{
-                                    root: classes.formControl,
-                                  }}
-                                  KeyboardButtonProps={{
-                                    "aria-label": "change date",
-                                  }}
-                                />
-                              </MuiPickersUtilsProvider>
                             </Grid>
-                          </Grid>
+                          </Tab.Container>
                         </Grid>
 
                         <Grid item md={6}>
-                          <Grid container>
-                            <Typography variant={"h6"}>Montante</Typography>
-                            <Grid item md={4}>
+                          <Tab.Container
+                            id="left-tabs-example"
+                            defaultActiveKey="first"
+                          >
+                            <Typography variant={"h6"} className={"mb-2"}>
                               Montante
+                            </Typography>
+                            <Grid container>
+                              <Grid item md={12}>
+                                <Nav variant="pills" className="flex-row">
+                                  <Grid container>
+                                    <Grid item md={4}>
+                                      <Nav.Item>
+                                        <Nav.Link
+                                          eventKey="first"
+                                          className={"text-center"}
+                                        >
+                                          Montante
+                                        </Nav.Link>
+                                      </Nav.Item>
+                                    </Grid>
+                                    <Grid item md={4}>
+                                      <Nav.Item>
+                                        <Nav.Link
+                                          eventKey="second"
+                                          className={"text-center"}
+                                        >
+                                          Intervalo
+                                        </Nav.Link>
+                                      </Nav.Item>
+                                    </Grid>
+                                    <Grid item md={4}>
+                                      <Nav.Item>
+                                        <Nav.Link
+                                          eventKey="third"
+                                          className={"text-center"}
+                                        >
+                                          Não definido
+                                        </Nav.Link>
+                                      </Nav.Item>
+                                    </Grid>
+                                  </Grid>
+                                </Nav>
+                              </Grid>
                             </Grid>
-                            <Grid item md={4}>
-                              Intrevalo
-                            </Grid>
-                            <Grid item md={4}>
-                              Não definido
-                            </Grid>
-                          </Grid>
 
-                          <Grid container>
-                            <Grid item md={12}></Grid>
-                          </Grid>
+                            <Grid container>
+                              <Grid item md={12}>
+                                <Tab.Content>
+                                  <Tab.Pane eventKey="first">
+                                    <TextField
+                                      classes={{
+                                        root: classes.formControl,
+                                      }}
+                                      className={"mt-4"}
+                                      defaultValue={0}
+                                      type={"number"}
+                                      minRows={0}
+                                      maxRows={10000000000000000000}
+                                      id="standard-helperText"
+                                      label="Montante"
+                                    />
+                                  </Tab.Pane>
+                                  <Tab.Pane eventKey="second">
+                                    <TextField
+                                      classes={{
+                                        root: classes.formControl,
+                                      }}
+                                      className={"mt-4"}
+                                      defaultValue={0}
+                                      type={"number"}
+                                      minRows={0}
+                                      maxRows={10000000000000000000}
+                                      id="standard-helperText"
+                                      label="Mínimo"
+                                    />
+
+                                    <TextField
+                                      classes={{
+                                        root: classes.formControl,
+                                      }}
+                                      className={"mt-2"}
+                                      defaultValue={1000}
+                                      type={"number"}
+                                      minRows={0}
+                                      maxRows={10000000000000000000}
+                                      id="standard-helperText"
+                                      label="Máximo"
+                                    />
+                                  </Tab.Pane>
+                                  <Tab.Pane eventKey="third"></Tab.Pane>
+                                </Tab.Content>
+                              </Grid>
+                            </Grid>
+                          </Tab.Container>
                         </Grid>
                       </Grid>
                     </div>
                   )}
                 </form>
               </Paper>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item md={12}>
+              <Grid container>
+                <Grid item md={12}>
+                  <Grid
+                    container
+                    spacing={2}
+                    className="grid-pagination bounceInUp align-right"
+                    id="ScrollUp"
+                  >
+                    <div className={"mr-3"}>
+                      <Typography variant={"body1"} className={"align-middle"}>
+                        <strong>
+                          De {pages.from == null ? "" : pages.from} até{" "}
+                          {pages.to == null ? "" : pages.to} de um total de{" "}
+                          {pages.total == null ? "" : pages.total} registos
+                        </strong>
+                      </Typography>
+                    </div>
+                    <Pagination
+                      changePage={fetchSupportsPaginate}
+                      data={pages}
+                      numberClass={"page-link"}
+                      buttonIcons={true}
+                      nextButtonIcon={"chevron-right"}
+                      prevButtonIcon={"chevron-left"}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={2}>
+                <Grid item md={12}>
+                  <SupportsTable />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

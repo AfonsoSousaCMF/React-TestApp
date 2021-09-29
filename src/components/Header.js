@@ -49,6 +49,7 @@ const Header = (props) => {
           <Dropdown.Toggle
             className="auth-dropdown"
             id="dropdown-autoclose-true"
+
           >
             <AccountCircleIcon className="username-avatar" />
             <span className="username">{localStorage.authUser}</span>
