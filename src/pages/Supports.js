@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import CustomChips from "react-custom-chips";
-import SupportsTable from "../components/SupportsTable.js";
+import SupportsTable, { createData } from "../components/SupportsTable.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingScreen from "../components/LoadingScreen";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
@@ -115,7 +115,6 @@ const Supports = (props) => {
       } else {
         setPages(supportsFromServer.data);
         setSupports(supportsFromServer.data.data);
-        console.log("here", supportsFromServer);
         setIsLoading(false);
       }
     });
@@ -590,7 +589,7 @@ const Supports = (props) => {
 
               <Grid container spacing={2}>
                 <Grid item md={12}>
-                  <SupportsTable />
+                  <SupportsTable supports={supports} />
                 </Grid>
               </Grid>
             </Grid>

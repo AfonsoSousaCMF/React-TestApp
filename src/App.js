@@ -22,6 +22,7 @@ import {
   useParams,
 } from "react-router-dom";
 import Supports from "./pages/Supports";
+import SupportsHistory from "./pages/SupportsHistory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -152,6 +153,9 @@ function App(props) {
             </PrivateRoute>
             <PrivateRoute path="/backoffice/supports" exact>
               <Supports />
+            </PrivateRoute>
+            <PrivateRoute path="/backoffice/supports/history" exact>
+              <SupportsHistory />
             </PrivateRoute>
 
             <Route path="/sign-in" exact>

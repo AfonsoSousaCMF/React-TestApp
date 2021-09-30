@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { lighten, makeStyles } from "@material-ui/core/styles";
 import {
+  Button,
+  Chip,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,13 +9,13 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  Paper,
-  Button,
-  Chip,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -50,34 +50,25 @@ const headCells = [
     disablePadding: false,
     label: "ID",
   },
-  { id: "name", numeric: false, disablePadding: false, label: "APOIO" },
+  { id: "action", numeric: false, disablePadding: false, label: "AÇÃO" },
   {
-    id: "starts_at",
-    numeric: false,
-    disablePadding: false,
-    label: "DATA DE ABERTURA",
-  },
-  {
-    id: "ends_at",
-    numeric: false,
-    disablePadding: false,
-    label: "DATA DE FECHO",
-  },
-  { id: "min", numeric: false, disablePadding: false, label: "MÍNIMO" },
-  { id: "max", numeric: false, disablePadding: false, label: "MÁXIMO" },
-  {
-    id: "state",
+    id: "support_id",
     numeric: true,
     disablePadding: false,
-    label: "Estado",
+    label: "ID APOIO",
   },
   {
-    id: "created_at",
+    id: "name",
     numeric: false,
     disablePadding: false,
-    label: "DATA CRIAÇÃO",
+    label: "APOIO",
   },
-  { id: "actions", numeric: false, disablePadding: false, label: "AÇÕES" },
+  {
+    id: "updated_at",
+    numeric: false,
+    disablePadding: false,
+    label: "DATA REGISTO",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -131,6 +122,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: "100%",
     marginBottom: theme.spacing(2),
+    backgroundColor: "rgba(234, 234, 234, 0.74)",
   },
   table: {
     minWidth: 750,
@@ -148,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SupportsTable(props) {
+const SupportsHistoryTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState("created_at");
@@ -264,4 +256,6 @@ export default function SupportsTable(props) {
       </Paper>
     </div>
   );
-}
+};
+
+export default SupportsHistoryTable;

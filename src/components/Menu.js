@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Collapse,
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,6 +16,9 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import MenuIcon from "@material-ui/icons/Menu";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import { NavLink } from "react-router-dom";
+import HistoryIcon from "@material-ui/icons/History";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
 const useStyles = makeStyles({
   list: {
@@ -40,6 +44,12 @@ export default function Menu({ props }) {
     }
 
     setState({ ...state, [anchor]: open });
+  };
+
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
   };
 
   const list = (anchor) => (
@@ -72,15 +82,33 @@ export default function Menu({ props }) {
                 <ListItemText primary="Dashboard" />
               </ListItem>
             </NavLink>
-            <NavLink to="/backoffice/supports" className="link-menu">
-              <Divider />
-              <ListItem button className="link-menu">
-                <ListItemIcon>
-                  <AttachMoneyIcon />
-                </ListItemIcon>
-                <ListItemText primary="Apoios" />
-              </ListItem>
-            </NavLink>
+            <ListItem button onClick={handleClick}>
+              <ListItemIcon>
+                <AttachMoneyIcon />
+              </ListItemIcon>
+              <ListItemText primary="Apoios" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <NavLink to="/backoffice/supports" className="link-menu">
+                <Divider />
+                <ListItem button className="link-menu pl-3">
+                  <ListItemIcon>
+                    <FormatListBulletedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Listagem" />
+                </ListItem>
+              </NavLink>
+              <NavLink to="/backoffice/supports/history" className="link-menu">
+                <Divider />
+                <ListItem button className="link-menu pl-3">
+                  <ListItemIcon>
+                    <HistoryIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Histórico" />
+                </ListItem>
+              </NavLink>
+            </Collapse>
           </div>
         ) : (
           <Divider />
