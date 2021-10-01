@@ -14,9 +14,8 @@ import {
   TablePagination,
   TableRow,
 } from "@material-ui/core";
-import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import LoadingScreen from "./LoadingScreen.js";
-
+import APIKit, { setClientToken } from "../../ApiCalls/APIKit.js";
+import LoadingScreen from "../Misc/LoadingScreen.js";
 
 const useStyles = makeStyles({
   root: {
@@ -59,21 +58,20 @@ const GetEntities = () => {
 
   // Fetch all Entities
   const fetchEntities = (page, data = null) => {
-    var token = localStorage.token
+    var token = localStorage.token;
     // sends request to api get the Entities
-    APIKit.get("http://sitea-c-1229:8001/api/v1/backoffice/entities?page=" + page,
+    APIKit.get(
+      "http://sitea-c-1229:8001/api/v1/backoffice/entities?page=" + page,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       }
-    ).then(
-      (entitiesFromServer) => {
-        setPages(entitiesFromServer.data);
-        setEntities(entitiesFromServer.data.data);
-        setIsLoading(false);
-      }
-    );
+    ).then((entitiesFromServer) => {
+      setPages(entitiesFromServer.data);
+      setEntities(entitiesFromServer.data.data);
+      setIsLoading(false);
+    });
   };
 
   const fetchEntitiesPaginate = (data) => {
@@ -104,23 +102,22 @@ const GetEntities = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {entities
-              .map((entitie, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={entitie.id}>
-                    {columns.map((column) => {
-                      const value = entitie[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {entities.map((entitie, index) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={entitie.id}>
+                  {columns.map((column) => {
+                    const value = entitie[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

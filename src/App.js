@@ -1,12 +1,12 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import "./App.css";
 import "./animate.css";
-import Header from "./components/Header.js";
-import News from "./pages/News.js";
+import Header from "./components/Misc/Header.js";
+import News from "./pages/News/News.js";
 import Login from "./pages/Login.js";
-import SingleNew from "./pages/SingleNew.js";
+import SingleNew from "./pages/News/SingleNew.js";
 import Dashboard from "./pages/Dashboard.js";
-import ScrollUp from "./components/ScrollUp";
+import ScrollUp from "./components/Misc/ScrollUp";
 import SessionTimeout from "./ApiCalls/SessionTimeout.js";
 import NotFound from "./pages/404.js";
 import { Button, makeStyles } from "@material-ui/core";
@@ -21,8 +21,8 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
-import Supports from "./pages/Supports";
-import SupportsHistory from "./pages/SupportsHistory";
+import Supports from "./pages/Supports/Supports";
+import SupportsHistory from "./pages/Supports/SupportsHistory";
 
 const useStyles = makeStyles((theme) => ({
   root: {

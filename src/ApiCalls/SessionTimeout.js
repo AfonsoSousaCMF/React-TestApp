@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import IdleTimer from "react-idle-timer";
-import SessionTimeoutDialog from "../components/SessionTimeoutDialog.js";
+import SessionTimeoutDialog from "../components/Misc/SessionTimeoutDialog.js";
 import { useHistory } from "react-router-dom";
 
 let countdownInterval;

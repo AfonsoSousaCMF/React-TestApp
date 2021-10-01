@@ -1,7 +1,7 @@
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { lighten, makeStyles } from "@material-ui/core/styles";
 import {
-  Button,
-  Chip,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,13 +9,14 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  Paper,
+  Button,
+  Chip,
+  Typography,
 } from "@material-ui/core";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import React, { useState } from "react";
+import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -50,25 +51,34 @@ const headCells = [
     disablePadding: false,
     label: "ID",
   },
-  { id: "action", numeric: false, disablePadding: false, label: "AÇÃO" },
+  { id: "name", numeric: false, disablePadding: false, label: "APOIO" },
   {
-    id: "support_id",
+    id: "starts_at",
+    numeric: false,
+    disablePadding: false,
+    label: "DATA DE ABERTURA",
+  },
+  {
+    id: "ends_at",
+    numeric: false,
+    disablePadding: false,
+    label: "DATA DE FECHO",
+  },
+  { id: "min", numeric: false, disablePadding: false, label: "MÍNIMO" },
+  { id: "max", numeric: false, disablePadding: false, label: "MÁXIMO" },
+  {
+    id: "state_id",
     numeric: true,
     disablePadding: false,
-    label: "ID APOIO",
+    label: "Estado",
   },
   {
-    id: "name",
+    id: "created_at",
     numeric: false,
     disablePadding: false,
-    label: "APOIO",
+    label: "DATA CRIAÇÃO",
   },
-  {
-    id: "updated_at",
-    numeric: false,
-    disablePadding: false,
-    label: "DATA REGISTO",
-  },
+  { id: "actions", numeric: false, disablePadding: false, label: "AÇÕES" },
 ];
 
 function EnhancedTableHead(props) {
@@ -140,7 +150,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SupportsHistoryTable = (props) => {
+export default function SupportsTable(props) {
   const classes = useStyles();
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState("created_at");
@@ -211,7 +221,7 @@ const SupportsHistoryTable = (props) => {
                           : row.maximum_amount}
                       </TableCell>
                       <TableCell align="left">
-                        {row.state ? (
+                        {row.state_id ? (
                           row.state.id === 2 ? (
                             <Chip
                               className={"state-open-small mx-2"}
@@ -230,14 +240,16 @@ const SupportsHistoryTable = (props) => {
                       <TableCell align="left">
                         {row.created_at == null ? "N/D" : row.created_at}
                       </TableCell>
-                      <TableCell align="left">
-                        <Button className={"Secondary-outlined"}>
+                      <TableCell align="left" className={"actions"}>
+                        <Button
+                          className={"Secondary-outlined width-btn-actions"}
+                        >
                           <SearchIcon className={"Secondary-outlined-icon"} />
                         </Button>
-                        <Button className="Info-outlined">
+                        <Button className="Info-outlined width-btn-actions">
                           <EditOutlinedIcon className={"Info-outlined-icon"} />
                         </Button>
-                        <Button className="Danger-outlined">
+                        <Button className="Danger-outlined width-btn-actions">
                           <DeleteIcon className={"Danger-outlined-icon"} />
                         </Button>
                       </TableCell>
@@ -245,9 +257,13 @@ const SupportsHistoryTable = (props) => {
                   );
                 }
               )}
-              {emptyRows > 0 && (
+              {props.supports.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={9} />
+                  <TableCell colSpan={9}>
+                    <Typography variant={"h4"}>
+                      Não há resultados para mostrar{" "}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -256,6 +272,4 @@ const SupportsHistoryTable = (props) => {
       </Paper>
     </div>
   );
-};
-
-export default SupportsHistoryTable;
+}

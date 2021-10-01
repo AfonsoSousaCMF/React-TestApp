@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { alpha, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Container,
@@ -16,9 +16,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import CustomChips from "react-custom-chips";
-import SupportsTable, { createData } from "../components/SupportsTable.js";
+import SupportsTable, {
+  createData,
+} from "../../components/Supports/SupportsTable.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingScreen from "../../components/Misc/LoadingScreen";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import SearchIcon from "@material-ui/icons/Search";
 import {
@@ -28,7 +30,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import "date-fns";
 import { Nav, Tab, Tabs } from "react-bootstrap";
-import APIKit from "../ApiCalls/APIKit";
+import APIKit from "../../ApiCalls/APIKit";
 import { Pagination } from "react-laravel-paginex";
 
 const useStyles = makeStyles((theme) => ({
@@ -72,14 +74,11 @@ const Supports = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [supports, setSupports] = useState([]);
   const [pages, setPages] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleShow = () => {
-    setIsOpen(true);
-  };
-  const handleHide = () => {
-    setIsOpen(false);
+  const handleClick = () => {
+    setOpen((prevOpen) => !prevOpen);
   };
 
   const handleDateChange = (date) => {
@@ -132,7 +131,7 @@ const Supports = (props) => {
         <Grid container>
           <Grid container spacing={2}>
             <Grid item md={12} className={"mt-3"}>
-              <h2>Apoios</h2>
+              <h2>Listagem Apoios</h2>
             </Grid>
           </Grid>
 
@@ -183,20 +182,16 @@ const Supports = (props) => {
 
                   <Grid container>
                     <Grid item md={12} className={"mt-1"}>
-                      <Button
-                        color="primary"
-                        className={"mr-2"}
-                        onClick={handleHide}
-                      >
+                      <Button color="primary" className={"mr-2"} type={"reset"}>
                         <strong>Descartar</strong>
                       </Button>
-                      <Button color="primary" onClick={handleShow}>
+                      <Button color="primary" onClick={handleClick}>
                         <strong>Pesquisa avançada</strong>
                       </Button>
                     </Grid>
                   </Grid>
 
-                  {isOpen && (
+                  {open && (
                     <div>
                       <hr className={"show-new-hr-dashed"} />
 
@@ -557,40 +552,40 @@ const Supports = (props) => {
           </Grid>
 
           <Grid container>
-            <Grid item md={12}>
-              <Grid container>
-                <Grid item md={12}>
-                  <Grid
-                    container
-                    spacing={2}
-                    className="grid-pagination bounceInUp align-right"
-                    id="ScrollUp"
-                  >
-                    <div className={"mr-3"}>
-                      <Typography variant={"body1"} className={"align-middle"}>
-                        <strong>
-                          De {pages.from == null ? "" : pages.from} até{" "}
-                          {pages.to == null ? "" : pages.to} de um total de{" "}
-                          {pages.total == null ? "" : pages.total} registos
-                        </strong>
-                      </Typography>
-                    </div>
-                    <Pagination
-                      changePage={fetchSupportsPaginate}
-                      data={pages}
-                      numberClass={"page-link"}
-                      buttonIcons={true}
-                      nextButtonIcon={"chevron-right"}
-                      prevButtonIcon={"chevron-left"}
-                    />
-                  </Grid>
+            <Grid container>
+              <Grid item md={6}>
+                <div className={"mr-3"}>
+                  <Typography variant={"body1"} className={"align-middle"}>
+                    <strong>
+                      De {pages.from == null ? "0" : pages.from} até{" "}
+                      {pages.to == null ? "0" : pages.to} de um total de{" "}
+                      {pages.total == null ? "0" : pages.total} registos
+                    </strong>
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item md={6}>
+                <Grid
+                  container
+                  spacing={2}
+                  className="grid-pagination bounceInUp align-right"
+                  id="ScrollUp"
+                >
+                  <Pagination
+                    changePage={fetchSupportsPaginate}
+                    data={pages}
+                    numberClass={"page-link"}
+                    buttonIcons={true}
+                    nextButtonIcon={"chevron-right"}
+                    prevButtonIcon={"chevron-left"}
+                  />
                 </Grid>
               </Grid>
+            </Grid>
 
-              <Grid container spacing={2}>
-                <Grid item md={12}>
-                  <SupportsTable supports={supports} />
-                </Grid>
+            <Grid container spacing={2}>
+              <Grid item md={12}>
+                <SupportsTable supports={supports} />
               </Grid>
             </Grid>
           </Grid>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import SupportsHistoryTable from "../components/SupportsHistoryTable";
-import APIKit from "../ApiCalls/APIKit";
-import LoadingScreen from "../components/LoadingScreen";
+import SupportsHistoryTable from "../../components/Supports/SupportsHistoryTable";
+import APIKit from "../../ApiCalls/APIKit";
+import LoadingScreen from "../../components/Misc/LoadingScreen";
 import { Container, Grid, Typography } from "@material-ui/core";
 import { Pagination } from "react-laravel-paginex";
-import SupportsTable from "../components/SupportsTable";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -45,24 +44,16 @@ const useStyles = makeStyles((theme) => ({
 
 const SupportsHistory = (props) => {
   const classes = useStyles();
-  const [supportstHistory, setSupportsHistory] = useState([]);
+  const [supportsHistory, setSupportsHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pages, setPages] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleShow = () => {
-    setIsOpen(true);
-  };
-  const handleHide = () => {
-    setIsOpen(false);
-  };
 
   useEffect(() => {
     setIsLoading(true);
-    fetchSupports(1);
+    fetchSupportsHistory(1);
   }, []);
 
-  const fetchSupports = (
+  const fetchSupportsHistory = (
     page,
     order = "id+asc",
     token = localStorage.token,
@@ -91,8 +82,8 @@ const SupportsHistory = (props) => {
     });
   };
 
-  const fetchSupportsPaginate = (data) => {
-    fetchSupports(data.page, data.order, data.token, data);
+  const fetchSupportsHistoryPaginate = (data) => {
+    fetchSupportsHistory(data.page, data.order, data.token, data);
   };
 
   return (
@@ -103,45 +94,43 @@ const SupportsHistory = (props) => {
         <Grid container>
           <Grid container spacing={2}>
             <Grid item md={12} className={"mt-3"}>
-              <h2>Apoios</h2>
+              <h2>Histórico Apoios</h2>
             </Grid>
           </Grid>
 
           <Grid container>
-            <Grid item md={12}>
-              <Grid container>
-                <Grid item md={12}>
-                  <Grid
-                    container
-                    spacing={2}
-                    className="grid-pagination bounceInUp align-right"
-                    id="ScrollUp"
-                  >
-                    <div className={"mr-3"}>
-                      <Typography variant={"body1"} className={"align-middle"}>
-                        <strong>
-                          De {pages.from == null ? "" : pages.from} até{" "}
-                          {pages.to == null ? "" : pages.to} de um total de{" "}
-                          {pages.total == null ? "" : pages.total} registos
-                        </strong>
-                      </Typography>
-                    </div>
-                    <Pagination
-                      changePage={fetchSupportsPaginate}
-                      data={pages}
-                      numberClass={"page-link"}
-                      buttonIcons={true}
-                      nextButtonIcon={"chevron-right"}
-                      prevButtonIcon={"chevron-left"}
-                    />
-                  </Grid>
-                </Grid>
+            <Grid container className={"mt-5"}>
+              <Grid item md={6}>
+                <div className={"mr-3"}>
+                  <Typography variant={"body1"} className={"align-middle"}>
+                    <strong>
+                      De {pages.from == null ? "0" : pages.from} até{" "}
+                      {pages.to == null ? "0" : pages.to} de um total de{" "}
+                      {pages.total == null ? "0" : pages.total} registos
+                    </strong>
+                  </Typography>
+                </div>
               </Grid>
+              <Grid item md={6}>
+                <div
+                  className="grid-pagination bounceInUp align-right"
+                  id="ScrollUp"
+                >
+                  <Pagination
+                    changePage={fetchSupportsHistoryPaginate}
+                    data={pages}
+                    numberClass={"page-link"}
+                    buttonIcons={true}
+                    nextButtonIcon={"chevron-right"}
+                    prevButtonIcon={"chevron-left"}
+                  />
+                </div>
+              </Grid>
+            </Grid>
 
-              <Grid container spacing={2}>
-                <Grid item md={12}>
-                  <SupportsHistoryTable supportstHistory={supportstHistory} />
-                </Grid>
+            <Grid container spacing={2}>
+              <Grid item md={12}>
+                <SupportsHistoryTable supportsHistory={supportsHistory} />
               </Grid>
             </Grid>
           </Grid>

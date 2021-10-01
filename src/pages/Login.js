@@ -9,17 +9,9 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
-import LoadingScreen from "../components/LoadingScreen.js";
-import SuccessAlert from "../components/SuccessAlert";
-import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import {
-  BrowserRouter as Router,
-  useRouteMatch,
-  withRouter,
-  useParams,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import LoadingScreen from "../components/Misc/LoadingScreen.js";
+import APIKit from "../ApiCalls/APIKit.js";
+import { withRouter } from "react-router-dom";
 
 const initialState = {
   username: "",
@@ -78,7 +70,6 @@ class Login extends Component {
     };
 
     const onFailure = (error) => {
-      console.log("erro", error.response.data.error.errors);
       this.setState({
         errors: error.response.data.error.errors,
         isLoading: false,

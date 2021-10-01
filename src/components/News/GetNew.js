@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { Grid, Paper, Typography, Divider, Chip } from "@material-ui/core";
-import LoadingScreen from "./LoadingScreen.js";
+import LoadingScreen from "../Misc/LoadingScreen.js";
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import { Pagination } from "react-laravel-paginex";
 

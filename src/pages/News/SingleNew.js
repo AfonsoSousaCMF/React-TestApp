@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { Image } from "react-bootstrap";
-import LoadingScreen from "../components/LoadingScreen.js";
+import LoadingScreen from "../../components/Misc/LoadingScreen.js";
 import {
   Typography,
   Container,

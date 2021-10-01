@@ -2,20 +2,16 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Pagination } from "react-laravel-paginex";
 import {
-  Container,
-  Grid,
-  Paper,
   Typography,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from "@material-ui/core";
-import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import LoadingScreen from "./LoadingScreen.js";
+import APIKit from "../../ApiCalls/APIKit.js";
+import LoadingScreen from "../Misc/LoadingScreen.js";
 
 const useStyles = makeStyles({
   root: {
@@ -58,22 +54,21 @@ const GetPrograms = () => {
 
   // Fetch all Programs
   const fetchPrograms = (page, data = null) => {
-    var token = localStorage.token
+    var token = localStorage.token;
 
     // sends request to api get the Programs
-    APIKit.get("http://sitea-c-1229:8001/api/v1/backoffice/programs?page=" + page,
+    APIKit.get(
+      "http://sitea-c-1229:8001/api/v1/backoffice/programs?page=" + page,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       }
-    ).then(
-      (programsFromServer) => {
-        setPages(programsFromServer.data);
-        setPrograms(programsFromServer.data.data);
-        setIsLoading(false);
-      }
-    );
+    ).then((programsFromServer) => {
+      setPages(programsFromServer.data);
+      setPrograms(programsFromServer.data.data);
+      setIsLoading(false);
+    });
   };
 
   const fetchProgramsPaginate = (data) => {
@@ -104,23 +99,22 @@ const GetPrograms = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {programs
-              .map((program) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={program.id}>
-                    {columns.map((column) => {
-                      const value = program[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {programs.map((program) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={program.id}>
+                  {columns.map((column) => {
+                    const value = program[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

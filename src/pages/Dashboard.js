@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Paper, Typography } from "@material-ui/core";
-import SuccessAlert from "../components/SuccessAlert";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import HistoryIcon from "@material-ui/icons/History";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-import APIKit, { setClientToken } from "../ApiCalls/APIKit.js";
-import {
-  BrowserRouter as Router,
-  withRouter,
-  useParams,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import APIKit from "../ApiCalls/APIKit.js";
+import { withRouter } from "react-router-dom";
 import {
   Timeline,
   TimelineConnector,
@@ -23,10 +16,10 @@ import {
   TimelineOppositeContent,
   TimelineSeparator,
 } from "@material-ui/lab";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingScreen from "../components/Misc/LoadingScreen";
 
 const Dashboard = (props) => {
-  const [toggleSuccessAlert, setToggleSuccessAlert] = useState(false);
+  // const [toggleSuccessAlert, setToggleSuccessAlert] = useState(false);
   const [dashboardSupports, setDashboardSupports] = useState([]);
   const [dashboardHistory, setDashboardHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

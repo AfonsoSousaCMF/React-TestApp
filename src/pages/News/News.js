@@ -1,8 +1,7 @@
 import { Container, Grid } from "@material-ui/core";
-import GetNew from "../components/GetNew.js"
+import GetNew from "../../components/News/GetNew.js";
 
-const News = (props) =>  {
-
+const News = (props) => {
   return (
     <>
       <Container>
@@ -11,7 +10,7 @@ const News = (props) =>  {
         </Grid>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default News
+export default News;
